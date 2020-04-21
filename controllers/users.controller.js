@@ -2,7 +2,7 @@ const db = require('../config/database_config');
 
 let User = {};
 
-User.add_user = async (user)=>{
+User.add_user = async (user) => {
     let query = `INSERT INTO questionbox_appusers SET ?`;
     try{
         let res = await db.query(query,user);
@@ -13,11 +13,22 @@ User.add_user = async (user)=>{
     }
 }
 
-User.get_all_users = async ()=>{
+User.get_all_users = async () => {
     let query = `SELECT * FROM questionbox_appusers`;
     try{
         let res = await db.query(query);
         return res;
+    }
+    catch(err){
+        throw err.sqlMessage;
+    }
+}
+
+User.get_user = async (user_name) => {
+    let query = `CALL get_user(?)`;
+    try{
+        let res = await db.query(query,user_name);
+        return res[0];
     }
     catch(err){
         throw err.sqlMessage;

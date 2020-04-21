@@ -85,8 +85,18 @@ CREATE TABLE `questionbox_appusers` (
   `bio` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionbox_appusers`
+--
+
+LOCK TABLES `questionbox_appusers` WRITE;
+/*!40000 ALTER TABLE `questionbox_appusers` DISABLE KEYS */;
+INSERT INTO `questionbox_appusers` VALUES ('t1',1,'yo','fu'),('t2',3,'yo','fu'),('t4',6,'yo','fu'),('aka',9,'$2b$10$0MemKEYX9oDOvVM8coFU.u6RiPj/LBuQ3NFqP0LNzsuWIfax6Lg4y','hey');
+/*!40000 ALTER TABLE `questionbox_appusers` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `questionbox_questionfollows`
@@ -253,6 +263,27 @@ LOCK TABLES `questionbox_userfollows` WRITE;
 /*!40000 ALTER TABLE `questionbox_userfollows` DISABLE KEYS */;
 /*!40000 ALTER TABLE `questionbox_userfollows` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'questionbox'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `get_user` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user`(name varchar(255))
+begin select * from questionbox_appusers where user_name like name;end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -263,4 +294,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-21 14:22:37
+-- Dump completed on 2020-04-21 21:42:49
