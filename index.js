@@ -3,8 +3,8 @@ const express = require("express"),
 
 const bodyParser = require("body-parser");
 
-const authentication_routes = require("./routes/auth"),
-    question_routes = require("./routes/question");
+const authentication_routes = require("./routes/auth");
+    // question_routes = require("./routes/question");
 
 require("./config/database_config");
 
@@ -15,4 +15,4 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/auth", authentication_routes);
-app.use("/questions", question_routes);
+// app.use("/questions", question_routes);
