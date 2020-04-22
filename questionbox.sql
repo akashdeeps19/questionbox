@@ -85,7 +85,7 @@ CREATE TABLE `questionbox_appusers` (
   `bio` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `questionbox_appusers` (
 
 LOCK TABLES `questionbox_appusers` WRITE;
 /*!40000 ALTER TABLE `questionbox_appusers` DISABLE KEYS */;
-INSERT INTO `questionbox_appusers` VALUES ('t1',1,'yo','fu'),('t2',3,'yo','fu'),('t4',6,'yo','fu'),('aka',9,'$2b$10$0MemKEYX9oDOvVM8coFU.u6RiPj/LBuQ3NFqP0LNzsuWIfax6Lg4y','hey');
+INSERT INTO `questionbox_appusers` VALUES ('aka',10,'$2b$10$CZhiKEt.W8UzBLscMX5E4OmMM5hydJW0mZrgdgGJ5mvUfd1DYpdc2','hey'),('akash',12,'$2b$10$0i5T3kemLe2NnTxGC0XuL.Sf8wJ4OuTGOIKGMhMGjPLUfDuzDIhwy','new');
 /*!40000 ALTER TABLE `questionbox_appusers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,4 +294,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-21 21:42:49
+-- Dump completed on 2020-04-22 11:44:26

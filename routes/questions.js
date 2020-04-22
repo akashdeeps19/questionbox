@@ -1,7 +1,8 @@
 const express = require("express");
-const router = express.Router();
-const Question = require("../models/question");
+const Question = require("../services/questions.services");
 const check_auth = require("../middleware/check_auth");
+
+const router = express.Router();
 
 router.post("/add", check_auth, (req, res) => {
 	console.log(req.userData);

@@ -1,0 +1,10 @@
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| id          | int(11)  | NO   | PRI | NULL    | auto_increment |
+| answer      | text     | YES  |     | NULL    |                |
+| views       | int(11)  | YES  |     | NULL    |                |
+| answered_on | datetime | YES  |     | NULL    |                |
+| question_id | int(11)  | YES  | MUL | NULL    |                |
+| user_id     | int(11)  | YES  | MUL | NULL    |                |
++-------------+----------+------+-----+---------+----------------+

@@ -1,10 +1,9 @@
 const express = require("express");
-const User = require("../controllers/users.controller");
+const User = require("../services/users.services");
 const bcrypt = require("bcrypt");
 const check_auth = require("../middleware/check_auth");
 const jwt = require("jsonwebtoken");
-require('dotenv').config()
-const jwt_key = process.env.JWT_KEY
+const jwt_key = require("../config/jwt_key")
 
 const router = express.Router();
 
