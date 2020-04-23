@@ -20,11 +20,12 @@ router.get("/:name",(req,res) => {
 });
 
 router.patch("/update",check_auth,(req,res) => {
-    let user = {id : req.user.id,
-        user_name : req.body.name,
-        bio : req.body.bio}
+    user = {};
+    ['bio','user_name'].forEach(key =>  {
+        if(key in req.body)user[key] = req.body[key];
+    });
 
-    User.update_user(user)
+    User.update_user(user,req.user.id)
     .then(
         res.status(202).json({message : "User updated"})
     )

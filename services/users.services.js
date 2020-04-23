@@ -36,10 +36,10 @@ User.get_user = async (user_name) => {
     }
 }
 
-User.update_user = async (user) => {
+User.update_user = async (user,id) => {
     let query = `UPDATE ${user_table} SET ? WHERE id = ?`
     try{
-        await db.query(query,[user,user.id]);
+        await db.query(query,[user,id]);
         return true;
     }
     catch(err){
