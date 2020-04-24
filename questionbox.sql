@@ -16,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `questionbox_answercomments`
+--
+
+DROP TABLE IF EXISTS `questionbox_answercomments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questionbox_answercomments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment` text NOT NULL,
+  `commented_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `answer_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `questionbox_answercomments_ibfk_1` (`answer_id`),
+  KEY `questionbox_answercomments_ibfk_2` (`user_id`),
+  CONSTRAINT `questionbox_answercomments_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `questionbox_answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questionbox_answercomments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionbox_answercomments`
+--
+
+LOCK TABLES `questionbox_answercomments` WRITE;
+/*!40000 ALTER TABLE `questionbox_answercomments` DISABLE KEYS */;
+INSERT INTO `questionbox_answercomments` VALUES (1,'nicee','2020-04-24 12:30:52',1,13);
+/*!40000 ALTER TABLE `questionbox_answercomments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `questionbox_answerdownvotes`
 --
 
@@ -126,6 +157,37 @@ LOCK TABLES `questionbox_appusers` WRITE;
 /*!40000 ALTER TABLE `questionbox_appusers` DISABLE KEYS */;
 INSERT INTO `questionbox_appusers` VALUES ('aka',10,'$2b$10$CZhiKEt.W8UzBLscMX5E4OmMM5hydJW0mZrgdgGJ5mvUfd1DYpdc2','hey'),('akash',13,'$2b$10$0J.Wm9UhcOOtwJ2c1dH7ju50bmvBISPuZV2t8nE9jUM.rAAM5yhJK',NULL);
 /*!40000 ALTER TABLE `questionbox_appusers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `questionbox_questioncomments`
+--
+
+DROP TABLE IF EXISTS `questionbox_questioncomments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questionbox_questioncomments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment` text NOT NULL,
+  `commented_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `question_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `questionbox_questioncomments_ibfk_1` (`question_id`),
+  KEY `questionbox_questioncomments_ibfk_2` (`user_id`),
+  CONSTRAINT `questionbox_questioncomments_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questionbox_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questionbox_questioncomments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionbox_questioncomments`
+--
+
+LOCK TABLES `questionbox_questioncomments` WRITE;
+/*!40000 ALTER TABLE `questionbox_questioncomments` DISABLE KEYS */;
+INSERT INTO `questionbox_questioncomments` VALUES (1,'gr8','2020-04-24 12:44:36',3,13);
+/*!40000 ALTER TABLE `questionbox_questioncomments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -524,4 +586,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-24 11:27:59
+-- Dump completed on 2020-04-24 12:47:34

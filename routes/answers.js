@@ -26,7 +26,7 @@ router.post("/question/:q_id", check_auth, async (req,res) => {
     if(error)res.status(400).json({error})
     if(res1.length != 0)return res.status(200).json({message : "You have already answered this question"})
     const [err2, res2] = await Answer.post_answer(answer);
-    if(error)res.status(400).json({error : err2});
+    if(error)return res.status(400).json({error : err2});
     res.status(200).json({answer_id : res2});
 });
 
