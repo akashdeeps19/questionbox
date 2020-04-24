@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 
 router.get("/:name",(req,res) => {
-    User.get_user(req.params.name)
+    User.get_user('user_name', req.params.name)
     .then(user => {
         if(user.length == 0)
             return res.status(404).json({
@@ -13,7 +13,20 @@ router.get("/:name",(req,res) => {
             });
             
         user = user[0];
-        ['id','user_password'].forEach(e => delete user[e]);
+        res.json(user);
+    })
+    .catch(err => res.status(401).json({message : err}));
+});
+
+router.get("/id/:id", (req,res) => {
+    User.get_user('id', req.params.id)
+    .then(user => {
+        if(user.length == 0)
+            return res.status(404).json({
+                message: "No such user"
+            });
+            
+        user = user[0];
         res.json(user);
     })
     .catch(err => res.status(401).json({message : err}));

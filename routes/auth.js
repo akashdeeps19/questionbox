@@ -27,7 +27,7 @@ router.post("/signup", (req, res) => {
 });
 
 router.post("/login", (req, res, next) => {
-    User.get_user(req.body.name)
+    User.get_user('user_name', req.body.name)
     .then(user => {
         if(user.length == 0)
             return res.status(401).json({

@@ -25,11 +25,11 @@ User.get_all_users = async () => {
     }
 }
 
-User.get_user = async (user_name) => {
-    let query = `CALL get_user(?)`;
+User.get_user = async (field, value) => {
+    let query = `SELECT * FROM ${user_table} WHERE ${field} = ?`
     try{
-        let res = await db.query(query,user_name);
-        return res[0];
+        let res = await db.query(query,value);
+        return res;
     }
     catch(err){
         throw err.sqlMessage;

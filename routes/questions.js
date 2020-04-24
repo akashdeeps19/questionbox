@@ -54,6 +54,27 @@ router.post("/:id/upvote", check_auth, (req,res) => {
 	.catch(err => res.status(501).json({error : err}));
 });
 
+router.get("/:q_id/downvoted", check_auth, async (req, res) => {
+    const [error, res1] = await Question.get_downvote(req.params.q_id,req.user.id);
+    if(error)return res.status(400).json({error});
+    res.json({downvoted : res1});
+});
+
+router.post("/:q_id/downvote", check_auth, async (req, res) => {
+    const [error, res1] = await Question.get_downvote(req.params.q_id,req.user.id);
+    if(error)return res.status(400).json({error});
+    if(!res1){
+        const [error, res2] = await Question.downvote(req.params.q_id,req.user.id);
+        if(error)return res.status(400).json({error});
+        res.status(200).json({message : "downvoted"})
+    }
+    else{
+        const [error, res3] = await Question.downvote_cancel(req.params.q_id,req.user.id);
+        if(error)return res.status(400).json({error});
+        res.status(200).json({message : "downvote cancelled"})
+    }
+});
+
 router.patch("/:id", check_auth, (req,res) => {
 	question_updated = {};
     ['question','topic_name'].forEach(key =>  {

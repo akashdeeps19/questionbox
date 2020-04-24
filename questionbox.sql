@@ -16,6 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `questionbox_answerdownvotes`
+--
+
+DROP TABLE IF EXISTS `questionbox_answerdownvotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questionbox_answerdownvotes` (
+  `user_id` int(11) NOT NULL,
+  `answer_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`answer_id`),
+  KEY `questionbox_answerdownvotes_ibfk_2` (`answer_id`),
+  CONSTRAINT `questionbox_answerdownvotes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questionbox_answerdownvotes_ibfk_2` FOREIGN KEY (`answer_id`) REFERENCES `questionbox_answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionbox_answerdownvotes`
+--
+
+LOCK TABLES `questionbox_answerdownvotes` WRITE;
+/*!40000 ALTER TABLE `questionbox_answerdownvotes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `questionbox_answerdownvotes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `questionbox_answers`
 --
 
@@ -24,17 +50,19 @@ DROP TABLE IF EXISTS `questionbox_answers`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionbox_answers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `answer` text,
-  `views` int(11) DEFAULT NULL,
-  `answered_on` datetime DEFAULT NULL,
+  `answer` text NOT NULL,
+  `views` int(11) DEFAULT '0',
+  `answered_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `question_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `upvotes` int(11) DEFAULT '0',
+  `downvotes` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `question_id` (`question_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `questionbox_answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questionbox_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questionbox_answers_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +71,7 @@ CREATE TABLE `questionbox_answers` (
 
 LOCK TABLES `questionbox_answers` WRITE;
 /*!40000 ALTER TABLE `questionbox_answers` DISABLE KEYS */;
+INSERT INTO `questionbox_answers` VALUES (1,'good ques',0,'2020-04-23 19:52:06',6,13,0,0);
 /*!40000 ALTER TABLE `questionbox_answers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,11 +83,12 @@ DROP TABLE IF EXISTS `questionbox_answerupvotes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionbox_answerupvotes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `answer_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `answer_id` (`answer_id`),
-  CONSTRAINT `questionbox_answerupvotes_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `questionbox_answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `user_id` int(11) NOT NULL,
+  `answer_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`answer_id`),
+  KEY `questionbox_answerupvotes_ibfk_2` (`answer_id`),
+  CONSTRAINT `questionbox_answerupvotes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questionbox_answerupvotes_ibfk_2` FOREIGN KEY (`answer_id`) REFERENCES `questionbox_answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,6 +126,32 @@ LOCK TABLES `questionbox_appusers` WRITE;
 /*!40000 ALTER TABLE `questionbox_appusers` DISABLE KEYS */;
 INSERT INTO `questionbox_appusers` VALUES ('aka',10,'$2b$10$CZhiKEt.W8UzBLscMX5E4OmMM5hydJW0mZrgdgGJ5mvUfd1DYpdc2','hey'),('akash',13,'$2b$10$0J.Wm9UhcOOtwJ2c1dH7ju50bmvBISPuZV2t8nE9jUM.rAAM5yhJK',NULL);
 /*!40000 ALTER TABLE `questionbox_appusers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `questionbox_questiondownvotes`
+--
+
+DROP TABLE IF EXISTS `questionbox_questiondownvotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questionbox_questiondownvotes` (
+  `user_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`question_id`),
+  KEY `questionbox_questiondownvotes_ibfk_2` (`question_id`),
+  CONSTRAINT `questionbox_questiondownvotes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questionbox_questiondownvotes_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `questionbox_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionbox_questiondownvotes`
+--
+
+LOCK TABLES `questionbox_questiondownvotes` WRITE;
+/*!40000 ALTER TABLE `questionbox_questiondownvotes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `questionbox_questiondownvotes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -140,6 +196,7 @@ CREATE TABLE `questionbox_questions` (
   `upvotes` int(11) DEFAULT '0',
   `asked_by_id` int(11) DEFAULT NULL,
   `topic_name` varchar(255) DEFAULT NULL,
+  `downvotes` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `asked_by_id` (`asked_by_id`),
   KEY `topic_name` (`topic_name`),
@@ -154,7 +211,7 @@ CREATE TABLE `questionbox_questions` (
 
 LOCK TABLES `questionbox_questions` WRITE;
 /*!40000 ALTER TABLE `questionbox_questions` DISABLE KEYS */;
-INSERT INTO `questionbox_questions` VALUES (3,'what is good?',1,0,13,'science'),(4,'what is c?',0,0,13,'computer'),(5,'where is ram?',1,0,10,'computer'),(6,'where is physics?',3,0,10,'science');
+INSERT INTO `questionbox_questions` VALUES (3,'what is good?',1,0,13,'science',0),(4,'what is c?',0,0,13,'computer',0),(5,'where is ram?',1,0,10,'computer',0),(6,'where is physics?',3,0,10,'science',0);
 /*!40000 ALTER TABLE `questionbox_questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,6 +323,74 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'questionbox'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `answer_downvote` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `answer_downvote`(id_ int(11))
+begin select downvotes into @u from questionbox_answers where id = id_; update questionbox_answers set downvotes = @u + 1 where id= id_; end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `answer_downvote_cancel` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `answer_downvote_cancel`(id_ int(11))
+begin select downvotes into @u from questionbox_answers where id = id_; update questionbox_answers set downvotes = @u - 1 where id= id_; end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `answer_upvote` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `answer_upvote`(id_ int(11))
+begin select upvotes into @u from questionbox_answers where id = id_; update questionbox_answers set upvotes = @u + 1 where id = id_; end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `answer_upvote_cancel` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `answer_upvote_cancel`(id_ int(11))
+begin select upvotes into @u from questionbox_answers where id = id_; update questionbox_answers set upvotes = @u - 1 where id= id_; end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_question` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -299,6 +424,40 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user`(name varchar(255))
 begin select * from questionbox_appusers where user_name like name;end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `question_downvote` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `question_downvote`(id_ int(11))
+begin select downvotes into @u from questionbox_questions where id = id_; update questionbox_questions set downvotes = @u + 1 where id= id_; end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `question_downvote_cancel` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `question_downvote_cancel`(id_ int(11))
+begin select downvotes into @u from questionbox_questions where id = id_; update questionbox_questions set downvotes = @u - 1 where id= id_; end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -365,4 +524,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-23 15:27:11
+-- Dump completed on 2020-04-24 11:27:59

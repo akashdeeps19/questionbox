@@ -24,4 +24,13 @@ const query = (sql,args) => {
     });
 }
 
-module.exports = {db,query};
+const query2 = async (sql,args) => {
+    try {
+        let res = await query(sql, args);
+        return [undefined, res];
+    } catch (error) {
+        return [error.sqlMessage];
+    }
+}
+
+module.exports = {db,query, query2};
