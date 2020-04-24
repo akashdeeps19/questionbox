@@ -33,7 +33,7 @@ CREATE TABLE `questionbox_answercomments` (
   KEY `questionbox_answercomments_ibfk_2` (`user_id`),
   CONSTRAINT `questionbox_answercomments_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `questionbox_answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questionbox_answercomments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `questionbox_answers` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `questionbox_answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questionbox_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questionbox_answers_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +177,7 @@ CREATE TABLE `questionbox_questioncomments` (
   KEY `questionbox_questioncomments_ibfk_2` (`user_id`),
   CONSTRAINT `questionbox_questioncomments_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questionbox_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questionbox_questioncomments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,13 +257,10 @@ CREATE TABLE `questionbox_questions` (
   `views` int(11) DEFAULT '0',
   `upvotes` int(11) DEFAULT '0',
   `asked_by_id` int(11) DEFAULT NULL,
-  `topic_name` varchar(255) DEFAULT NULL,
   `downvotes` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `asked_by_id` (`asked_by_id`),
-  KEY `topic_name` (`topic_name`),
-  CONSTRAINT `questionbox_questions_ibfk_3` FOREIGN KEY (`asked_by_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `questionbox_questions_ibfk_4` FOREIGN KEY (`topic_name`) REFERENCES `questionbox_topics` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `questionbox_questions_ibfk_3` FOREIGN KEY (`asked_by_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -273,8 +270,35 @@ CREATE TABLE `questionbox_questions` (
 
 LOCK TABLES `questionbox_questions` WRITE;
 /*!40000 ALTER TABLE `questionbox_questions` DISABLE KEYS */;
-INSERT INTO `questionbox_questions` VALUES (3,'what is good?',1,0,13,'science',0),(4,'what is c?',0,0,13,'computer',0),(5,'where is ram?',1,0,10,'computer',0),(6,'where is physics?',3,0,10,'science',0);
+INSERT INTO `questionbox_questions` VALUES (3,'what is good?',8,0,13,0),(4,'what is c?',0,0,13,0),(5,'where is ram?',1,0,10,0),(6,'where is physics?',3,0,10,0);
 /*!40000 ALTER TABLE `questionbox_questions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `questionbox_questiontopics`
+--
+
+DROP TABLE IF EXISTS `questionbox_questiontopics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questionbox_questiontopics` (
+  `topic_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  PRIMARY KEY (`topic_id`,`question_id`),
+  KEY `questionbox_questiontopics_ibfk_2` (`question_id`),
+  CONSTRAINT `questionbox_questiontopics_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `questionbox_topics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questionbox_questiontopics_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `questionbox_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionbox_questiontopics`
+--
+
+LOCK TABLES `questionbox_questiontopics` WRITE;
+/*!40000 ALTER TABLE `questionbox_questiontopics` DISABLE KEYS */;
+INSERT INTO `questionbox_questiontopics` VALUES (1,3);
+/*!40000 ALTER TABLE `questionbox_questiontopics` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -304,34 +328,6 @@ LOCK TABLES `questionbox_questionupvotes` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `questionbox_topicfollows`
---
-
-DROP TABLE IF EXISTS `questionbox_topicfollows`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questionbox_topicfollows` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `topic_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `topic_name` (`topic_name`),
-  CONSTRAINT `questionbox_topicfollows_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `questionbox_topicfollows_ibfk_2` FOREIGN KEY (`topic_name`) REFERENCES `questionbox_topics` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `questionbox_topicfollows`
---
-
-LOCK TABLES `questionbox_topicfollows` WRITE;
-/*!40000 ALTER TABLE `questionbox_topicfollows` DISABLE KEYS */;
-/*!40000 ALTER TABLE `questionbox_topicfollows` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `questionbox_topics`
 --
 
@@ -340,8 +336,9 @@ DROP TABLE IF EXISTS `questionbox_topics`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionbox_topics` (
   `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +347,7 @@ CREATE TABLE `questionbox_topics` (
 
 LOCK TABLES `questionbox_topics` WRITE;
 /*!40000 ALTER TABLE `questionbox_topics` DISABLE KEYS */;
-INSERT INTO `questionbox_topics` VALUES ('computer'),('science');
+INSERT INTO `questionbox_topics` VALUES ('computer',1),('science',2);
 /*!40000 ALTER TABLE `questionbox_topics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -586,4 +583,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-24 12:47:34
+-- Dump completed on 2020-04-24 21:00:47
