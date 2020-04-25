@@ -12,7 +12,10 @@ router.post("/signup", (req, res) => {
         if (err)
             return res.status(500).json({error: err});
 
-        user = {user_name : req.body.name,
+        user = {user_name : req.body.user_name,
+                first_name : req.body.first_name,
+                last_name : req.body.last_name,
+                email : req.body.email,
                 user_password : hash,
                 bio : req.body.bio};
 
@@ -27,7 +30,7 @@ router.post("/signup", (req, res) => {
 });
 
 router.post("/login", (req, res, next) => {
-    User.get_user('user_name', req.body.name)
+    User.get_user('user_name', req.body.user_name)
     .then(user => {
         if(user.length == 0)
             return res.status(401).json({
