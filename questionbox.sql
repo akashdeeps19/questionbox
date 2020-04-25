@@ -146,7 +146,7 @@ CREATE TABLE `questionbox_appusers` (
   `bio` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +155,7 @@ CREATE TABLE `questionbox_appusers` (
 
 LOCK TABLES `questionbox_appusers` WRITE;
 /*!40000 ALTER TABLE `questionbox_appusers` DISABLE KEYS */;
-INSERT INTO `questionbox_appusers` VALUES ('aka',10,'$2b$10$CZhiKEt.W8UzBLscMX5E4OmMM5hydJW0mZrgdgGJ5mvUfd1DYpdc2','hey'),('akash',13,'$2b$10$0J.Wm9UhcOOtwJ2c1dH7ju50bmvBISPuZV2t8nE9jUM.rAAM5yhJK',NULL);
+INSERT INTO `questionbox_appusers` VALUES ('aka',10,'$2b$10$CZhiKEt.W8UzBLscMX5E4OmMM5hydJW0mZrgdgGJ5mvUfd1DYpdc2','hey'),('akash',13,'$2b$10$0J.Wm9UhcOOtwJ2c1dH7ju50bmvBISPuZV2t8nE9jUM.rAAM5yhJK',NULL),('akas',14,'$2b$10$MT.agRJiLlzwn22H3LR2gumKZQtTnAT0MCDN5NTW5IBAt7koAnFSO','mann');
 /*!40000 ALTER TABLE `questionbox_appusers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,10 +224,9 @@ DROP TABLE IF EXISTS `questionbox_questionfollows`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionbox_questionfollows` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `question_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  `user_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`question_id`),
   KEY `user_id` (`user_id`),
   KEY `question_id` (`question_id`),
   CONSTRAINT `questionbox_questionfollows_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -241,6 +240,7 @@ CREATE TABLE `questionbox_questionfollows` (
 
 LOCK TABLES `questionbox_questionfollows` WRITE;
 /*!40000 ALTER TABLE `questionbox_questionfollows` DISABLE KEYS */;
+INSERT INTO `questionbox_questionfollows` VALUES (14,3);
 /*!40000 ALTER TABLE `questionbox_questionfollows` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,6 +328,33 @@ LOCK TABLES `questionbox_questionupvotes` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `questionbox_topicfollows`
+--
+
+DROP TABLE IF EXISTS `questionbox_topicfollows`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questionbox_topicfollows` (
+  `topic_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`topic_id`,`user_id`),
+  KEY `fk_questionbox_topicfollows_2_idx` (`user_id`),
+  CONSTRAINT `fk_questionbox_topicfollows_1` FOREIGN KEY (`topic_id`) REFERENCES `questionbox_topics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_questionbox_topicfollows_2` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionbox_topicfollows`
+--
+
+LOCK TABLES `questionbox_topicfollows` WRITE;
+/*!40000 ALTER TABLE `questionbox_topicfollows` DISABLE KEYS */;
+INSERT INTO `questionbox_topicfollows` VALUES (1,14);
+/*!40000 ALTER TABLE `questionbox_topicfollows` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `questionbox_topics`
 --
 
@@ -359,10 +386,9 @@ DROP TABLE IF EXISTS `questionbox_userfollows`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionbox_userfollows` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `follower_id` int(11) DEFAULT NULL,
-  `follows_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  `follower_id` int(11) NOT NULL,
+  `follows_id` int(11) NOT NULL,
+  PRIMARY KEY (`follower_id`,`follows_id`),
   KEY `follower_id` (`follower_id`),
   KEY `follows_id` (`follows_id`),
   CONSTRAINT `questionbox_userfollows_ibfk_1` FOREIGN KEY (`follower_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -376,6 +402,7 @@ CREATE TABLE `questionbox_userfollows` (
 
 LOCK TABLES `questionbox_userfollows` WRITE;
 /*!40000 ALTER TABLE `questionbox_userfollows` DISABLE KEYS */;
+INSERT INTO `questionbox_userfollows` VALUES (14,10);
 /*!40000 ALTER TABLE `questionbox_userfollows` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -450,6 +477,46 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_following_questions` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_following_questions`(u_id int(11))
+begin
+select qq.* from questionbox_questionfollows qqf, questionbox_questions qq
+where qqf.user_id = u_id and qqf.question_id = qq.id;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_following_topics` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_following_topics`(u_id int(11))
+begin
+select qt.* from questionbox_topicfollows qtf, questionbox_topics qt
+where qtf.user_id = u_id and qtf.topic_id = qt.id;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_question` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -471,6 +538,46 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_question_followers` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_question_followers`(q_id int(11))
+begin
+select qu.* from questionbox_questionfollows qqf, questionbox_appusers qu
+where qqf.question_id = q_id and qqf.user_id = qu.id;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_topic_followers` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_topic_followers`(t_id int(11))
+begin
+select qu.* from questionbox_topicfollows qtf, questionbox_appusers qu
+where qtf.topic_id = t_id and qtf.user_id = qu.id;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_user` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -483,6 +590,46 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user`(name varchar(255))
 begin select * from questionbox_appusers where user_name like name;end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_user_followers` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user_followers`(u_id int(11))
+begin
+select a.* from questionbox_userfollows qu, questionbox_appusers a
+where qu.follows_id = u_id and a.id = qu.follower_id;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_user_following` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user_following`(u_id int(11))
+begin
+select a.* from questionbox_userfollows qu, questionbox_appusers a
+where qu.follower_id = u_id and a.id = qu.follows_id;
+end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -583,4 +730,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-24 21:00:47
+-- Dump completed on 2020-04-25 10:54:29

@@ -69,4 +69,34 @@ router.delete("/delete", check_auth, (req, res, next) => {
     });
 });
 
+router.get("/:id/follow", check_auth, async (req, res) => {
+    let [error, res1] = await User.is_following(req.user.id, req.params.id);
+    if(error)return res.status(401).json({error});
+    res.json({following : res1});
+});
+
+router.post("/:id/follow", check_auth, async (req, res) => {
+    let [error, res1] = await User.follow(req.user.id, req.params.id);
+    if(error)return res.status(401).json({error});
+    res.json({message : "following"});
+});
+
+router.post("/:id/unfollow", check_auth, async (req, res) => {
+    let [error, res1] = await User.unfollow(req.user.id, req.params.id);
+    if(error)return res.status(401).json({error});
+    res.json({message : "unfollowed"});
+});
+
+router.get("/:id/followers", async (req, res) => {
+    let [error, res1] = await User.get_followers(req.params.id);
+    if(error)return res.status(401).json({error});
+    res.json({followers : res1});
+});
+
+router.get("/:id/following", async (req, res) => {
+    let [error, res1] = await User.get_following(req.params.id);
+    if(error)return res.status(401).json({error});
+    res.json({following : res1});
+});
+
 module.exports = router;

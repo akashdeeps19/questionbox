@@ -138,4 +138,34 @@ router.delete("/:id", check_auth, (req, res, next) => {
 	});
 });
 
+router.get("/:q_id/follow", check_auth, async (req, res) => {
+    let [error, res1] = await Question.is_following(req.user.id,req.params.q_id);
+    if(error)return res.status(401).json({error});
+    res.json({following : res1});
+});
+
+router.post("/:q_id/follow", check_auth, async (req, res) => {
+    let [error, res1] = await Question.follow(req.user.id, req.params.q_id);
+    if(error)return res.status(401).json({error});
+    res.json({message : "following"});
+});
+
+router.post("/:q_id/unfollow", check_auth, async (req, res) => {
+    let [error, res1] = await Question.unfollow(req.user.id, req.params.q_id);
+    if(error)return res.status(401).json({error});
+    res.json({message : "unfollowed"});
+});
+
+router.get("/:q_id/followers", async (req, res) => {
+    let [error, res1] = await Question.get_followers(req.params.q_id);
+    if(error)return res.status(401).json({error});
+    res.json({followers : res1});
+});
+
+router.get("/user/following", check_auth, async (req, res) => {
+    let [error, res1] = await Question.get_following(req.user.id);
+    if(error)return res.status(401).json({error});
+    res.json({following : res1});
+});
+
 module.exports = router;

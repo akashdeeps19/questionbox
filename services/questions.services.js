@@ -4,6 +4,7 @@ let Question = {};
 const question_table = 'questionbox_questions';
 const question_upvotes_table = 'questionbox_questionupvotes';
 const question_downvotes_table = 'questionbox_questiondownvotes';
+const question_follow_table = 'questionbox_questionfollows'
 
 Question.add_question = async (question) => {
     let query = `INSERT INTO ${question_table} SET ?`;
@@ -153,6 +154,42 @@ Question.delete_question = async (id) => {
     catch(err){
         throw err.sqlMessage;
     }
+}
+
+Question.get_followers = async (id) => {
+    let query = 'CALL get_question_followers(?)'
+    let [err, res] = await db.query2(query, id);
+    if(err)return [err];
+    return [undefined, res[0]];
+}
+
+Question.get_following = async (u_id) => {
+    let query = 'CALL get_following_questions(?)'
+    let [err, res] = await db.query2(query, u_id);
+    if(err)return [err];
+    return [undefined, res[0]];
+}
+
+Question.is_following = async (u_id, q_id) => {
+    let query = `SELECT * FROM ${question_follow_table} WHERE user_id = ? AND question_id = ?`;
+    let [err, res] = await db.query2(query, [u_id, q_id]);
+    if(err)return [err];
+    if(res.length == 0)return [undefined, false];
+    return [undefined, true];
+}
+
+Question.follow = async (u_id, q_id) => {
+    let query = `INSERT INTO ${question_follow_table} SET ?`;
+    let [err, res] = await db.query2(query, {user_id : u_id, question_id : q_id});
+    if(err)return [err];
+    return [undefined, true];
+}
+
+Question.unfollow = async (u_id, q_id) => {
+    let query = `DELETE FROM ${question_follow_table} WHERE user_id = ? AND question_id = ?`;
+    let [err, res] = await db.query2(query, [u_id, q_id]);
+    if(err)return [err];
+    return [undefined, true];
 }
 
 module.exports = Question;

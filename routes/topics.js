@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:t_id", async (req, res) => {
+    console.log('here')
     const [error, res1] = await Topic.get_topic('id = ?', [req.params.t_id]);
     if(error)return res.status(400).json({error});
     res.status(200).json({topic : res1});
@@ -74,6 +75,36 @@ router.delete("/question/:q_id", check_auth, (req, res) => {
         res.status(200).json({message : "topic deleted from question"});
     })
 	.catch(err=>res.status(501).json({error : err}));
+});
+
+router.get("/:t_id/follow", check_auth, async (req, res) => {
+    let [error, res1] = await Topic.is_following(req.user.id,req.params.t_id);
+    if(error)return res.status(401).json({error});
+    res.json({following : res1});
+});
+
+router.post("/:t_id/follow", check_auth, async (req, res) => {
+    let [error, res1] = await Topic.follow(req.user.id, req.params.t_id);
+    if(error)return res.status(401).json({error});
+    res.json({message : "following"});
+});
+
+router.post("/:t_id/unfollow", check_auth, async (req, res) => {
+    let [error, res1] = await Topic.unfollow(req.user.id, req.params.t_id);
+    if(error)return res.status(401).json({error});
+    res.json({message : "unfollowed"});
+});
+
+router.get("/:t_id/followers", async (req, res) => {
+    let [error, res1] = await Topic.get_followers(req.params.t_id);
+    if(error)return res.status(401).json({error});
+    res.json({followers : res1});
+});
+
+router.get("/user/following", check_auth, async (req, res) => {
+    let [error, res1] = await Topic.get_following(req.user.id);
+    if(error)return res.status(401).json({error});
+    res.json({following : res1});
 });
 
 module.exports = router;
