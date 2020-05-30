@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Home from '../home'
+// import Home from '../home'
 import Login from '../login'
 import Signup from '../signup'
 import { Route, Switch,BrowserRouter,Redirect } from 'react-router-dom'
 import decode from 'jwt-decode';
 
-
+import App from '../../components/App'
 const checkAuth = () =>{
 	const token = sessionStorage.getItem('token');
 	return !!token
@@ -29,7 +29,8 @@ export default () => (
   	<Switch>
       <Route exact path="/login" render={props=><Login {...props} />} />
       <Route exact path="/Signup" render={props=><Signup {...props} />} />
-      <AuthRoute exact path="/" component={Home} />
+      {/* <AuthRoute exact path="/" component={Home} /> */}
+      <AuthRoute exact path="/" component={App} />
     </Switch> 
   </BrowserRouter>
   

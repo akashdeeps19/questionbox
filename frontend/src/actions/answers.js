@@ -26,7 +26,7 @@ export const updateAnswer = (answer, questionId) => {
 }
 
 // ** Async Actions **
-/question/:q_id
+// /question/:q_id
 export const createAnswer = (answer, questionId) => {
   return dispatch => {
     return fetch(`${API_URL}/answers/question/${questionId}`, {
