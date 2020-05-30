@@ -25,7 +25,7 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 
 	onSubmit = (evt) => {
 	  evt.preventDefault();
-	  axios.post(`http://localhost:3000/auth/login`, this.state.form)
+	  axios.post(`http://192.168.1.7:3000/auth/login`, this.state.form)
   		.then(res => {
   			sessionStorage.setItem('token',res.data.token);
 				this.props.history.push('/');

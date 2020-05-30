@@ -30,13 +30,16 @@ class Question extends Component {
 
   render() {
     const { question } = this.props
+    console.log(this.props)
+    var ques = {id:this.props["id"] , question:this.props["question"] , asked_by_id:this.props["asked_by_id"], downvotes:this.props["downvotes"], upvotes:this.props["upvotes"], question:this.props["question"]}
+    console.log("the question is"+ques)
     return (
         <div>
         { question ?
         <div>
-          <QuestionCard question={question} />
+          <QuestionCard question={ques} />
           <button onClick={this.handleDelete}>Delete</button>
-          <CreateAnswer question={question} />
+          <CreateAnswer question={ques} />
         </div>
         : "Loading" 
         }
@@ -46,9 +49,23 @@ class Question extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    question: state.questions.find(question => question.id === +ownProps.match.params.questionId)
-  }
+  console.log(state.questions["questions"])
+  
+    for(var i=0;i<state.questions["questions"].length;i++)
+    {
+      console.log("thing"+ state.questions["questions"][i]["id"]);
+      if (state.questions["questions"][i]["id"]===+ownProps.match.params.questionId)
+      {
+        console.log("returning"+state.questions["questions"][i] );
+        return state.questions["questions"][i];
+      }
+    }
+    console.log("returned nothing");
+  
+  // return {
+  //   question: state.questions.find(question => question.id === +ownProps.match.params.questionId)
+
+  // }
 } 
 
 

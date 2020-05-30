@@ -6,6 +6,7 @@ import { createAnswer } from '../actions/answers'
 class CreateAnswer extends Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       answer: ""
     }
@@ -15,7 +16,7 @@ class CreateAnswer extends Component {
     const { value } = event.target;
 
     this.setState({
-      content: value
+      answer: value
     });
   }
 
@@ -26,8 +27,10 @@ class CreateAnswer extends Component {
   }
 
   render() {
+    console.log("form loaded")
     return (
     <div>
+      Enter Your answer below
       <form onSubmit={this.handleOnSubmit}>
         <div>
           <textarea
@@ -41,7 +44,7 @@ class CreateAnswer extends Component {
           <button type="submit">Add Answer</button>
         </div>
       </form>
-      <Answers question={this.props.question} />
+      {/* <Answers question={this.props.question} /> */}
     </div>
     );
   }

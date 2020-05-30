@@ -1,4 +1,5 @@
-const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = process.env.REACT_APP_API_URL;
+const API_URL='http://192.168.1.7:3000'
 
 // ** Action Creators **
 export const setAnswers = (answers, questionId) => {
@@ -28,12 +29,17 @@ export const updateAnswer = (answer, questionId) => {
 // ** Async Actions **
 // /question/:q_id
 export const createAnswer = (answer, questionId) => {
+  var bearer = 'Bearer'+sessionStorage.getItem('token');
+  console.log("the berarer token is"+ bearer);
   return dispatch => {
     return fetch(`${API_URL}/answers/question/${questionId}`, {
       method: 'POST',
-      headers: {
+      withCredentials:true,
+      credentials:'include',
+      headers:new Headers( {
+        'Authorization':bearer,
         'Content-Type': 'application/json',
-      },
+      }),
       body: JSON.stringify({ answer: answer }),
     })
       .then(response => response.json())

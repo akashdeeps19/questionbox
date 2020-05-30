@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL='http://192.168.1.7:3000';
 
 // Action Creators
 const setQuestions = questions => {
@@ -31,6 +31,7 @@ const removeQuestion = questionId => {
 
 // Async Actions
 export const getQuestions = () => {
+  console.log("Getting question");
   return dispatch => {
     return fetch(`${API_URL}/questions/all`)
     .then(response => response.json())
@@ -44,6 +45,7 @@ export const getQuestions = () => {
 // GET /questions/:id<br/><br/>
 
 export const getQuestion = (questionId) => {
+  console.log("getting eac question");
   return dispatch => {
     return fetch(`${API_URL}/questions/${questionId}`)
     .then(response => response.json())
@@ -56,12 +58,18 @@ export const getQuestion = (questionId) => {
 }
 // POST  /questions/add      BODY {question}<br/><br/>
 export const createQuestion = (question, routerHistory) => {
-  console.log("trying")
-  console.log(question)
+  console.log("posting question")
+  console.log(question + " bearer token=" + "bearer");
+  // var url = API_URL;
+  var bearer = 'Bearer'+sessionStorage.getItem('token');
+  console.log(question + " bearer token=" + "bearer");
   return dispatch => {
     return fetch(`${API_URL}/questions/add`, {
       method: 'POST',
+      withCredentials:true,
+      credentials:'include',
       headers: {
+        'Authorization':bearer,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ question: question }),

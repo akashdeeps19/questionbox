@@ -10,6 +10,8 @@ class Answers extends Component {
 
 render() {
   const { question } = this.props
+  // console.log(question["question"] + " this is the question");
+  console.log(question.answers+" is this defined")
 return (
   <div>
       { question ? question.answers.sort(function(a,b) 
