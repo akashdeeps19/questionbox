@@ -8,7 +8,7 @@ const topics_routes = require("./routes/topics")
 const question_comments_routes = require("./routes/question_comments");
 const answers_routes = require("./routes/answers");
 const answer_comments_routes = require("./routes/answer_comments");
-
+const cors = require('cors');
 require("./config/database_config");
 
 const app = express();
@@ -18,7 +18,7 @@ app.listen(port,()=>console.log(`listening at ${port}`));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cors())
 app.use("/auth", authentication_routes);
 app.use("/users", users_routes);
 app.use("/questions", questions_routes);

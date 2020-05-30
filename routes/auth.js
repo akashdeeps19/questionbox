@@ -7,7 +7,9 @@ const jwt_key = require("../config/jwt_key")
 
 const router = express.Router();
 
+// Object {user_name: "S", first_name: "SD", last_name: "Rd", email: "s@g.com", password: "123"…}
 router.post("/signup", (req, res) => {
+    // console.log("This is the username"+req.body.user_name)
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err)
             return res.status(500).json({error: err});

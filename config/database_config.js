@@ -3,7 +3,7 @@ let mysql = require('mysql2')
 let db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'password',
+    password: 'ubuntu@2196',
     database: 'questionbox'
 })
 
