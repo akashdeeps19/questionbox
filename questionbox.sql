@@ -141,6 +141,8 @@ DROP TABLE IF EXISTS `questionbox_appusers`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questionbox_appusers` (
   `user_name` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_password` varchar(255) DEFAULT NULL,
   `bio` varchar(255) DEFAULT NULL,
@@ -149,15 +151,6 @@ CREATE TABLE `questionbox_appusers` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `questionbox_appusers`
---
-
-LOCK TABLES `questionbox_appusers` WRITE;
-/*!40000 ALTER TABLE `questionbox_appusers` DISABLE KEYS */;
-INSERT INTO `questionbox_appusers` VALUES ('aka',10,'$2b$10$CZhiKEt.W8UzBLscMX5E4OmMM5hydJW0mZrgdgGJ5mvUfd1DYpdc2','hey'),('akash',13,'$2b$10$0J.Wm9UhcOOtwJ2c1dH7ju50bmvBISPuZV2t8nE9jUM.rAAM5yhJK',NULL),('akas',14,'$2b$10$MT.agRJiLlzwn22H3LR2gumKZQtTnAT0MCDN5NTW5IBAt7koAnFSO','mann');
-/*!40000 ALTER TABLE `questionbox_appusers` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `questionbox_questioncomments`
