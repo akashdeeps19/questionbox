@@ -143,6 +143,7 @@ CREATE TABLE `questionbox_appusers` (
   `user_name` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_password` varchar(255) DEFAULT NULL,
   `bio` varchar(255) DEFAULT NULL,
