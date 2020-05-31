@@ -34,6 +34,7 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 	  .catch(function (error) {
 	    console.log(error);
 	  });
+	  console.log(sessionStorage.getItem('token')+" this is the token");
     }
 
 	render(){

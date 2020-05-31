@@ -29,21 +29,21 @@ export const updateAnswer = (answer, questionId) => {
 // ** Async Actions **
 // /question/:q_id
 export const createAnswer = (answer, questionId) => {
-  var bearer = 'Bearer'+sessionStorage.getItem('token');
+  var bearer = 'Bearer '+sessionStorage.getItem('token');
+  // sessionStorage.setItem()
+  // sessionStorage.getItem("question")
   console.log("the berarer token is"+ bearer);
   console.log(answer)
   return dispatch => {
-    return fetch(`${API_URL}/answers/question/${questionId}`, {
+    return fetch(`${API_URL}/answers/question/${questionId}/`, {
       method: 'POST',
-      withCredentials:true,
-      credentials:'include',
-      'Access-Control-Allow-Origin':API_URL,
-      headers:new Headers( {
-        'Access-Control-Allow-Origin':API_URL,
+      // 'Access-Control-Allow-Origin':API_URL,
+      headers: {
+        // 'Access-Control-Allow-Origin':API_URL,
         'Authorization':bearer,
         'Content-Type': 'application/json',
-      }),
-      body: JSON.stringify({ answer: answer }),
+      },
+      body: JSON.stringify({ answer: answer['answer'] }),
     })
       .then(response => response.json())
       .then(answer => {
@@ -54,7 +54,7 @@ export const createAnswer = (answer, questionId) => {
 }
 // GET /answers/question/:q_id
 export const getAnswers = (questionId) => {
-  console.log("getting answers");
+  console.log("getting answers now ");
   return dispatch => {
     return fetch(`${API_URL}/answers/question/${questionId}`)
       .then(response => response.json())
