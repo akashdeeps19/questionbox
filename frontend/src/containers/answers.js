@@ -9,10 +9,15 @@ import { getQuestions } from '../actions/questions'
 class Answers extends Component {
 
 render() {
-  const { question } = this.props
+  var { question } = this.props
+  question.answers=[];
+  // console.log(this.props);
+
   // console.log(question["question"] + " this is the question");
-  console.log(question.answers+" is this defined")
+  // console.log(question.answers+" is this defined");
 return (
+  // console
+  // console.log(question.answers+" is this defined")
   <div>
       { question ? question.answers.sort(function(a,b) 
         { return (a.count < b.count) ? 1 : ((b.count > a.count) ? -1 : 0)} 

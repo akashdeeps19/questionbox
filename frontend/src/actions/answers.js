@@ -31,12 +31,15 @@ export const updateAnswer = (answer, questionId) => {
 export const createAnswer = (answer, questionId) => {
   var bearer = 'Bearer'+sessionStorage.getItem('token');
   console.log("the berarer token is"+ bearer);
+  console.log(answer)
   return dispatch => {
     return fetch(`${API_URL}/answers/question/${questionId}`, {
       method: 'POST',
       withCredentials:true,
       credentials:'include',
+      'Access-Control-Allow-Origin':API_URL,
       headers:new Headers( {
+        'Access-Control-Allow-Origin':API_URL,
         'Authorization':bearer,
         'Content-Type': 'application/json',
       }),
@@ -51,6 +54,7 @@ export const createAnswer = (answer, questionId) => {
 }
 // GET /answers/question/:q_id
 export const getAnswers = (questionId) => {
+  console.log("getting answers");
   return dispatch => {
     return fetch(`${API_URL}/answers/question/${questionId}`)
       .then(response => response.json())
