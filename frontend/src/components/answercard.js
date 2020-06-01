@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const AnswerCard = ({content, rating, upvoter, downvoter , }) => { 
+const AnswerCard = ({content, rating, upvoter, downvoter ,comment }) => { 
     return (
         <div>
           <p>{content}</p>
