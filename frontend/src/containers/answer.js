@@ -26,7 +26,7 @@ class Answer extends Component {
   render() {
     return (
         <div className="mybox">
-          <AnswerCard rating={0} upvoter={0} downvoter={0} content={this.props.answer.answer} />
+          <AnswerCard rating={0} upvoter={10} downvoter={5} content={this.props.answer.answer} comment={"This is a good answer"} />
         </div>
     );
   }
