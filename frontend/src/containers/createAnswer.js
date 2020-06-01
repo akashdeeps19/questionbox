@@ -31,7 +31,7 @@ class CreateAnswer extends Component {
     // console.log(this.props.question);
     var json;
     (async () => {
-      const response = await fetch('http://192.168.1.7:3000/answers/question/${this.question["id"]}')
+      const response = await fetch('http://localhost:3000/answers/question/${this.question["id"]}')
        json = await response.json();
       console.log("the json is"+json);
     })();
