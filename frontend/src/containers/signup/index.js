@@ -30,7 +30,7 @@ export default class Signup extends React.Component{
 		console.log(this.state.form)
       evt.preventDefault();
     	let self = this;
-		axios.post(`http://192.168.1.7:3000/auth/signup`, this.state.form)
+		axios.post(`http://localhost:3000/auth/signup`, this.state.form)
 		  .then(function (response) {
 		    console.log(response);
 		   if(response.data.status === 200)

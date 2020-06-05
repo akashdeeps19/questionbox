@@ -1,4 +1,5 @@
 const db = require('../config/database_config');
+const Topic  = require('./topics.services');
 
 let Question = {};
 const question_table = 'questionbox_questions';
@@ -7,9 +8,15 @@ const question_downvotes_table = 'questionbox_questiondownvotes';
 const question_follow_table = 'questionbox_questionfollows'
 
 Question.add_question = async (question) => {
+    let topics = question.topics;
+    delete question.topics;
     let query = `INSERT INTO ${question_table} SET ?`;
     try{
         let res = await db.query(query,question);
+        for(let topic of topics){
+            let [err2, res2] = await Topic.add_questiontopic(topic,res.insertId);
+            if(err2)throw err2;
+        }
         return res.insertId;
     }
     catch(err){
@@ -17,21 +24,31 @@ Question.add_question = async (question) => {
     }
 }
 
-Question.get_all_questions = async () => {
+Question.get_all_questions = async (topic) => {
     let query = `SELECT * FROM ${question_table}`;
+    let questions = [];
     try{
-        let res = await db.query(query);
-        return res;
+        let res;
+        if(topic == undefined)
+            res = await db.query(query);
+        else{
+            [err, res] = await Topic.get_topicquestions(topic);
+        }
+        for(let q of res){
+            questions.push(await Question.get_question(q.id, false));
+        }
+        return questions;
     }
     catch(err){
         throw err.sqlMessage;
     }
 }
 
-Question.get_question = async (id) => {
-    let query = `CALL get_question(?,true)`;
+Question.get_question = async (id,view) => {
+    let query = `CALL get_question(?,${view})`;
     try{
         let res = await db.query(query,id);
+        res[0][0]['topics'] = res[1];
         return res[0];
     }
     catch(err){

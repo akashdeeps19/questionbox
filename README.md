@@ -21,8 +21,9 @@ POST	/users/:id/follow<br/><br/>
 POST	/users/:id/unfollow<br/><br/>
 GET	/users/:id/followers<br/><br/>
 GET	/users/:id/following<br/><br/>
-POST	/questions/add      BODY {question}<br/><br/>
-GET	/questions/all<br/><br/>
+POST	/questions/add      BODY {question, topics : [topic_id1, topic_id2, ...]}<br/><br/>
+GET	/questions/  //all questions<br/><br/>
+GET     /questions/?topic=topic_id  //topic specific questions<br/><br/>
 GET	/questions/:id<br/><br/>
 GET	/questions/:id/upvoted<br/><br/>
 POST	/questions/:id/upvote<br/><br/>

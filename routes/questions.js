@@ -8,7 +8,7 @@ router.post("/add", check_auth, (req, res) => {
 	Question.add_question({
 		question: req.body.question,
 		asked_by_id: req.user.id, 
-		topic_name: req.body.topic,
+		topics: req.body.topics,
 		views: 0
 	})
 	.then((question) => {
@@ -20,8 +20,8 @@ router.post("/add", check_auth, (req, res) => {
 	.catch(err=>res.status(401).json({error : err}));
 });
 
-router.get("/all", (req, res, next) => {
-	Question.get_all_questions()
+router.get("/", (req, res, next) => {
+	Question.get_all_questions(req.query.topic)
 	.then(questions => {
         res.status(200).json({
 			questions: questions
@@ -32,7 +32,7 @@ router.get("/all", (req, res, next) => {
 
 
 router.get("/:id", (req, res, next) => {
-	Question.get_question(req.params.id)
+	Question.get_question(req.params.id,true)
 	.then(question => res.status(200).json({question}))
 	.catch(err=>res.status(501).json({error : err}));
 });

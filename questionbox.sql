@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.30, for Linux (x86_64)
 --
 -- Host: localhost    Database: questionbox
 -- ------------------------------------------------------
--- Server version	5.7.29-0ubuntu0.18.04.1
+-- Server version	5.7.30-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -149,9 +149,18 @@ CREATE TABLE `questionbox_appusers` (
   `bio` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `questionbox_appusers`
+--
+
+LOCK TABLES `questionbox_appusers` WRITE;
+/*!40000 ALTER TABLE `questionbox_appusers` DISABLE KEYS */;
+INSERT INTO `questionbox_appusers` VALUES ('ak','akas','h','as@g.com',15,'$2b$10$9pDEXeVOdcjNBiFYNLbMR.Z7YFO/NKQ.MZ/MwMvqWNQrCKr.K59b6','nicee');
+/*!40000 ALTER TABLE `questionbox_appusers` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `questionbox_questioncomments`
@@ -255,7 +264,7 @@ CREATE TABLE `questionbox_questions` (
   PRIMARY KEY (`id`),
   KEY `asked_by_id` (`asked_by_id`),
   CONSTRAINT `questionbox_questions_ibfk_3` FOREIGN KEY (`asked_by_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +273,7 @@ CREATE TABLE `questionbox_questions` (
 
 LOCK TABLES `questionbox_questions` WRITE;
 /*!40000 ALTER TABLE `questionbox_questions` DISABLE KEYS */;
-INSERT INTO `questionbox_questions` VALUES (3,'what is good?',8,0,13,0),(4,'what is c?',0,0,13,0),(5,'where is ram?',1,0,10,0),(6,'where is physics?',3,0,10,0);
+INSERT INTO `questionbox_questions` VALUES (3,'what is good?',11,0,13,0),(4,'what is c?',0,0,13,0),(5,'where is ram?',1,0,10,0),(6,'where is physics?',3,0,10,0),(7,'what is this',3,0,15,0),(8,'what is this thing',0,0,15,0),(9,'what is this thing',0,0,15,0),(10,'what is this thing',0,0,15,0),(11,'what is this thing',0,0,15,0),(12,'what is rom',0,0,15,0),(13,'what is rom',0,0,15,0),(14,'what is rom',0,0,15,0);
 /*!40000 ALTER TABLE `questionbox_questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +300,7 @@ CREATE TABLE `questionbox_questiontopics` (
 
 LOCK TABLES `questionbox_questiontopics` WRITE;
 /*!40000 ALTER TABLE `questionbox_questiontopics` DISABLE KEYS */;
-INSERT INTO `questionbox_questiontopics` VALUES (1,3);
+INSERT INTO `questionbox_questiontopics` VALUES (1,3),(1,7),(2,7),(1,8),(2,8),(1,9),(2,9),(1,10),(2,10),(1,11),(2,11),(1,12),(1,13),(1,14);
 /*!40000 ALTER TABLE `questionbox_questiontopics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -515,9 +524,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -526,6 +535,8 @@ begin
 SELECT views into @vw from questionbox_questions where id = id_;
 set @vw = if(inc,@vw+1,@vw); update questionbox_questions set views = @vw where id = id_;
 select * from questionbox_questions where id = id_;
+select qt.name from questionbox_topics qt, questionbox_questiontopics qqt
+where qqt.question_id = id_ and qqt.topic_id = qt.id;
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -724,4 +735,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-25 10:54:29
+-- Dump completed on 2020-05-31 12:13:48
