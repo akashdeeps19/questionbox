@@ -29,14 +29,10 @@ class CreateAnswer extends Component {
   render() {
     console.log("form loaded")
     // console.log(this.props.question);
-    var json;
-    (async () => {
-      const response = await fetch('http://localhost:3000/answers/question/${this.question["id"]}')
-       json = await response.json();
-      console.log("the json is"+json);
-    })();
 
-    var ques = {answer:json,id:this.props.question["id"] , question:this.props.question["question"] , asked_by_id:this.props.question["asked_by_id"], downvotes:this.props.question["downvotes"], upvotes:this.props.question["upvotes"], question:this.props.question["question"]}
+
+
+    var ques = {id:this.props.question["id"] , question:this.props.question["question"] , asked_by_id:this.props.question["asked_by_id"], downvotes:this.props.question["downvotes"], upvotes:this.props.question["upvotes"], question:this.props.question["question"]}
     console.log(ques)
 
     return (
