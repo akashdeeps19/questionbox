@@ -32,11 +32,19 @@ class AskQuestion extends Component {
     return (
       <form onSubmit={this.handleOnSubmit}>
         <input
-          type="text"
-          name="title"
+          type="textarea"
+          name="Title"
           value={this.state.title}
           onChange={this.handleOnChange}
           placeholder="Ask a Question"
+        />
+        <br/>
+        <br/>
+          <input
+          type="textarea"
+          name="Topic"
+          value={this.state.title}
+          placeholder="Topic goes here!"
         />
         {/* <input
           type="text"
@@ -45,7 +53,8 @@ class AskQuestion extends Component {
           onChange={this.handleOnChange}
           placeholder="Add Topic"
         /> */}
-
+        <br/>
+        <br/>
         <button>Ask Question</button>
       </form>
     );
