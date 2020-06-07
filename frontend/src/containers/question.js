@@ -42,7 +42,9 @@ class Question extends Component {
         <div>
         { question ?
         <div>
+        <div  style={{border: '7px solid red'}}>
           <QuestionCard question={ques} />
+        </div>
           <button onClick={this.handleDelete}>Delete</button>
           <CreateAnswer question={ques} />
         </div>

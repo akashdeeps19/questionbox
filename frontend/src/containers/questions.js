@@ -38,7 +38,11 @@ class Questions extends Component {
     
     return (
 
-        <div>
+        <div style={
+    {
+     border: '7px solid red'
+    }
+  }>
           {renderQuestions}
         </div>
     );  

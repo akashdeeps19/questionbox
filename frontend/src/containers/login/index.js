@@ -53,6 +53,7 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 				    <Col>
 				      <Checkbox style={{float:'left',marginTop:'0px'}}> Remember me</Checkbox>
 				      <br/>
+				      <div style={{ backgroundImage: `url(require("./login.jpeg"))`, backgroundPosition: 'center',backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}/>
 				      <Link style={{textAlign:'center'}} className="pull-right" to="/Signup">Hurry up and register if you haven't!</Link>
 				      </Col>
 				    </FormGroup>
@@ -61,6 +62,8 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 				    </FormGroup>
 				 </form>
 				 </Col>
+				 
+
 			</Col>
 		)
 	}

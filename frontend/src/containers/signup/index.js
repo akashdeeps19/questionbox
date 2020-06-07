@@ -2,6 +2,7 @@ import React from 'react'
 import {  Link } from 'react-router-dom'
 import axios from 'axios'
 import {  Col, FormControl, FormGroup, Button, Checkbox, Modal, Image, Grid, Thumbnail } from 'react-bootstrap'
+
 export default class Signup extends React.Component{
 	constructor(props){
 		super(props);
@@ -48,7 +49,8 @@ export default class Signup extends React.Component{
 	render(){
 		let close = () => this.setState({ show: false });
 		return(
-			<Col sm={4} smOffset={4} style={{marginTop:'140px'}}>
+			<Col sm={4} smOffset={4} style={{marginTop:'40px'}}>
+			
 				<Col>
 				<form className="well" onSubmit={this.onSubmit}>
 					<h1 style={{textAlign:'center', marginBottom:'20px'}}>Register to get started!</h1>
@@ -75,6 +77,7 @@ export default class Signup extends React.Component{
 				    <Col>
 				      <Checkbox style={{float:'left',marginTop:'0px'}}>       I would like to receive promotional mail and notifications regarding my questions, and interested topics.</Checkbox>
 				      <Link className="pull-right" to="/login">Already have an account ?</Link>
+				      <div style={{ backgroundImage: `url(require("./login.jpeg"))`, backgroundPosition: 'center',backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}/>
 				      </Col>
 				    </FormGroup>
 				    <Modal
@@ -103,6 +106,7 @@ export default class Signup extends React.Component{
 				   	
 				 </form>
 				 </Col>
+					<div style={{backgroundImage: `url(https://source.unsplash.com/random)`, backgroundPosition: 'center',backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}/>
 
 			</Col>
 
