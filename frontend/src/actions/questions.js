@@ -1,4 +1,4 @@
-const API_URL='http://192.168.1.7:3000';
+const API_URL='http://localhost:3000';
 
 // Action Creators
 const setQuestions = questions => {
@@ -33,7 +33,7 @@ const removeQuestion = questionId => {
 export const getQuestions = () => {
   console.log("Getting question");
   return dispatch => {
-    return fetch(`${API_URL}/questions/all`)
+    return fetch(`${API_URL}/questions`)
     .then(response => response.json())
     .then(questions => dispatch(setQuestions(questions)))
     .catch(error => console.log(error));
@@ -59,20 +59,19 @@ export const getQuestion = (questionId) => {
 // POST  /questions/add      BODY {question}<br/><br/>
 export const createQuestion = (question, routerHistory) => {
   console.log("posting question")
-  console.log(question + " bearer token=" + "bearer");
+  // console.log( " bearer token=" + bearer);
+  console.log(question);
   // var url = API_URL;
-  var bearer = 'Bearer'+sessionStorage.getItem('token');
-  console.log(question + " bearer token=" + "bearer");
+  var bearer = 'Bearer '+sessionStorage.getItem('token');
+  console.log(" bearer token=" + bearer);
   return dispatch => {
     return fetch(`${API_URL}/questions/add`, {
       method: 'POST',
-      withCredentials:true,
-      credentials:'include',
       headers: {
         'Authorization':bearer,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ question: question }),
+      body: JSON.stringify({ question: question["question"] , topics :[1,2] }),
     })
       .then(response => {
         response.json()

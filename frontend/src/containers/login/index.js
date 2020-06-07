@@ -25,7 +25,7 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 
 	onSubmit = (evt) => {
 	  evt.preventDefault();
-	  axios.post(`http://192.168.1.7:3000/auth/login`, this.state.form)
+	  axios.post(`http://localhost:3000/auth/login`, this.state.form)
   		.then(res => {
   			sessionStorage.setItem('token',res.data.token);
 				this.props.history.push('/');
@@ -34,11 +34,12 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 	  .catch(function (error) {
 	    console.log(error);
 	  });
+	  console.log(sessionStorage.getItem('token')+" this is the token");
     }
 
 	render(){
 		return(
-			<Col sm={4} smOffset={4} style={{marginTop:'140px'}}>
+			<Col sm={5} smOffset={4} style={{marginTop:'140px'}}>
 				<Col>
 				<form className="well" onSubmit={this.onSubmit}>
 					<h1 style={{textAlign:'center', marginBottom:'20px'}}>Login</h1>
@@ -50,15 +51,19 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 				    </FormGroup>
 				    <FormGroup>
 				    <Col>
-				      <Checkbox style={{float:'left',marginTop:'0px'}}>Check me out</Checkbox>
-				      <Link className="pull-right" to="/Signup">signup ?</Link>
+				      <Checkbox style={{float:'left',marginTop:'0px'}}> Remember me</Checkbox>
+				      <br/>
+				      <div style={{ backgroundImage: `url(require("./login.jpeg"))`, backgroundPosition: 'center',backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}/>
+				      <Link style={{textAlign:'center'}} className="pull-right" to="/Signup">Hurry up and register if you haven't!</Link>
 				      </Col>
 				    </FormGroup>
 				    <FormGroup>
-				      <Button bsStyle="primary" style={{width:'100%', height:'40px',marginBottom:'10px'}} onClick={this.onSubmit} type="submit">submit</Button>
+				      <Button bsStyle="primary" style={{width:'100%', height:'40px',marginBottom:'10px'}} onClick={this.onSubmit} type="submit">Login</Button>
 				    </FormGroup>
 				 </form>
 				 </Col>
+				 
+
 			</Col>
 		)
 	}

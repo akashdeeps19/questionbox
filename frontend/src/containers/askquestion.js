@@ -22,7 +22,7 @@ class AskQuestion extends Component {
   handleOnSubmit = event => {
     event.preventDefault()
     const { history, createQuestion } = this.props
-    const rdd = {question:this.state.title , topic:this.state.details}
+    const rdd = {question:this.state.title , topics:[1,2]}
 
     createQuestion(rdd, history)
     this.setState({ title: '', details: '' });
@@ -32,20 +32,29 @@ class AskQuestion extends Component {
     return (
       <form onSubmit={this.handleOnSubmit}>
         <input
-          type="text"
-          name="title"
+          type="textarea"
+          name="Title"
           value={this.state.title}
           onChange={this.handleOnChange}
           placeholder="Ask a Question"
         />
-        <input
+        <br/>
+        <br/>
+          <input
+          type="textarea"
+          name="Topic"
+          value={this.state.title}
+          placeholder="Topic goes here!"
+        />
+        {/* <input
           type="text"
           name="details"
           value={this.state.details}
           onChange={this.handleOnChange}
           placeholder="Add Topic"
-        />
-
+        /> */}
+        <br/>
+        <br/>
         <button>Ask Question</button>
       </form>
     );
