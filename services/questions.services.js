@@ -1,5 +1,6 @@
 const db = require('../config/database_config');
 const Topic  = require('./topics.services');
+const Answer = require('./answers.services');
 
 let Question = {};
 const question_table = 'questionbox_questions';
@@ -49,6 +50,7 @@ Question.get_question = async (id,view) => {
     try{
         let res = await db.query(query,id);
         res[0][0]['topics'] = res[1];
+        res[0][0]['answers'] = await Answer.get_answers(id);
         return res[0];
     }
     catch(err){

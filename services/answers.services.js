@@ -13,7 +13,7 @@ Answer.post_answer = async (answer) => {
 }
 
 Answer.get_answers = async (q_id) => {
-    let query = `SELECT * FROM ${answer_table} WHERE question_id = ? ORDER BY upvotes DESC`;
+    let query = `SELECT * FROM ${answer_table} WHERE question_id = ?`;
     try{
         let res = await db.query(query,q_id);
         return res;
