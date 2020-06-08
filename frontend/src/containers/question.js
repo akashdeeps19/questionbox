@@ -35,9 +35,9 @@ class Question extends Component {
    
     // console.log("answers")
     // console.log(ans)
-    // console.log("updated",this.props)
-    var ques = {topics:this.props["topics"],id:this.props["id"] , question:this.props["question"] , asked_by_id:this.props["asked_by_id"], downvotes:this.props["downvotes"], upvotes:this.props["upvotes"], question:this.props["question"]}
-    // console.log("the question is"+ques)
+    console.log("updated",this.props)
+    var ques = {topics:this.props["topics"],id:this.props["id"] , question:this.props["question"] , asked_by_id:this.props["asked_by_id"], downvotes:this.props["downvotes"], upvotes:this.props["upvotes"] , answers:this.props["answers"] }
+    console.log("the answers are  is"+ques.answers)
     return (
         <div>
         { question ?

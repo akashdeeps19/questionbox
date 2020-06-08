@@ -32,7 +32,7 @@ class CreateAnswer extends Component {
 
 
 
-    var ques = {id:this.props.question["id"] , question:this.props.question["question"] , asked_by_id:this.props.question["asked_by_id"], downvotes:this.props.question["downvotes"], upvotes:this.props.question["upvotes"], question:this.props.question["question"]}
+    var ques = {id:this.props.question["id"] , question:this.props.question["question"] , asked_by_id:this.props.question["asked_by_id"], downvotes:this.props.question["downvotes"], upvotes:this.props.question["upvotes"], question:this.props.question["question"], answers:this.props.question["answers"]}
     console.log(ques)
 
     return (
