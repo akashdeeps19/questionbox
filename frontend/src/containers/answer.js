@@ -34,6 +34,14 @@ localStorage.setItem('rating',5)
    return (
         <div className="mybox">
           <AnswerCard rating={+5} upvoter={2} downvoter={3} content={this.props.answer.answer} comment={"That was very helpful,thanks!"} />
+          <br/>
+          <form id = "commentblock">
+          <label for="commentbox">Add your own comment:</label>
+          <br/>
+          <textarea id="commentbox" name="commentbox" rows="4" cols="25"></textarea>
+          <br/><br/>
+          <input type="submit" value="Submit"/>
+          </form>
         </div>
     );
 
@@ -42,7 +50,7 @@ localStorage.setItem('rating',5)
           <p>this.props.answer.answer</p>
 		<p>Helpfullness rating :</p>
 		<div className="results">5</div>
-          <p className="rating" id='demo'>HELPFULNESS RATING: {localStorage.getItem('rating')}</p>
+          <p className="rating" id='demo'>Score: {localStorage.getItem('rating')}</p>
 
           <button onClick="function() {
             document.getElementById('demo').innerHTML = '6';}">Upvote</button>
@@ -50,6 +58,12 @@ localStorage.setItem('rating',5)
           <button onClick="this.downVote()">Downvote</button>
           <p> Comments </p>
           <p> Thanks!This was very helpfull! </p>
+          <form>
+          <label for="commentbox">Add your own comment:</label>
+          <textarea id="commentbox" name="commentbox" rows="4" cols="25"></textarea>
+          <br/><br/>
+          <input type="submit" value="Submit">
+          </form>
         </div>
     );*/
   }
