@@ -47,7 +47,7 @@ class AskQuestion extends Component {
           style={{ border: '4px inset #99ccff'}}
           type="textarea"
           name="Topic"
-          value={this.state.title}
+          value={this.state.topic}
           placeholder="Topic goes here!"
         />
         {/* <input
