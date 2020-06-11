@@ -7,6 +7,7 @@ const Navbar = props => {
       <NavLink style={{ marginRight: '500px', fontSize: 22 }} to="/">QuestionBox</NavLink>
       <NavLink style={{ marginRight: '30px', fontSize: 15 }} to="/questions">Answer Question</NavLink>
       <NavLink style={{ marginRight: '20px', fontSize: 15 }} to="/questions/new">Ask Question</NavLink>
+	<NavLink style={{ marginRight: '20px', fontSize: 15 }} to="/user">Profile</NavLink>
     </div>
   );
 }

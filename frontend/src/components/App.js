@@ -6,6 +6,7 @@ import Question from '../containers/question'
 import askQuestion from '../containers/askquestion'
 import Navbar from '../components/Navbar'
 import Home from '../components/Home'
+import User from '../components/user'
 
 import { getQuestions } from '../actions/questions'
 import { connect } from 'react-redux';
@@ -26,6 +27,7 @@ class App extends Component {
               <Route path='/questions/new' component={askQuestion}/>
               <Route path='/questions/:questionId' component={Question}/>
               <Route path='/questions' component={Questions}/>
+		 <Route path='/user' component={User}/>
             </Switch>
         </div>
       </Router>

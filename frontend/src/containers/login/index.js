@@ -24,6 +24,8 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 	}
 
 	onSubmit = (evt) => {
+	sessionStorage.setItem('name',this.state.form.user_name);
+	console.log(this.state);
 	  evt.preventDefault();
 	  axios.post(`http://localhost:3000/auth/login`, this.state.form)
   		.then(res => {
@@ -34,6 +36,8 @@ import {  Col, FormControl, FormGroup, Button, Checkbox } from 'react-bootstrap'
 	  .catch(function (error) {
 	    console.log(error);
 	  });
+	
+	 console.log(sessionStorage.getItem('name')+" this is the name");
 	  console.log(sessionStorage.getItem('token')+" this is the token");
     }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Answers from './answers'
 import { createAnswer } from '../actions/answers'
+import {withRouter} from 'react-router'
 
 class CreateAnswer extends Component {
   constructor(props) {

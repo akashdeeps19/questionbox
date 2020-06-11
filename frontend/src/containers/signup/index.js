@@ -29,14 +29,14 @@ export default class Signup extends React.Component{
                 
 	onSubmit = (evt) => {
 		console.log(this.state.form)
+		sessionStorage.setItem('name',this.state.form.user_name);
       evt.preventDefault();
     	let self = this;
 		axios.post(`http://localhost:3000/auth/signup`, this.state.form)
-		  .then(function (response) {
-		    console.log(response);
-		   if(response.data.status === 200)
-		   		self.setState({ show: true });
-		  })
+		  .then(res => {
+  			sessionStorage.setItem('token',res.data.token);
+				this.props.history.push('/');
+			})
 		  .catch(function (error) {
 		    console.log(error);
 		  });
