@@ -15,8 +15,12 @@ Answer.post_answer = async (answer) => {
 Answer.get_answers = async (q_id) => {
     let query = `SELECT * FROM ${answer_table} WHERE question_id = ?`;
     try{
+        let answers = [];
         let res = await db.query(query,q_id);
-        return res;
+        for(let a of res){
+            answers.push(await Answer.get_answer(`id = ?`, [a.id]))
+        }
+        return answers;
     }
     catch(err){
         throw err.sqlMessage;

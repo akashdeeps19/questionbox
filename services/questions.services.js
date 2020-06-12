@@ -38,6 +38,7 @@ Question.get_all_questions = async (topic) => {
         for(let q of res){
             questions.push(await Question.get_question(q.id, false));
         }
+        console.log(questions)
         return questions;
     }
     catch(err){
@@ -51,12 +52,13 @@ Question.get_question = async (id,view) => {
         let res = await db.query(query,id);
         res[0][0]['topics'] = res[1];
         res[0][0]['answers'] = await Answer.get_answers(id);
-        let qu = `SELECT count(*) from ${question_upvotes_table} WHERE answer_id = ?`;
-        let u = await db.query(qu, values);
-        res[0]['upvotes'] = u[0]['count(*)'];
-        let qd = `SELECT count(*) from ${question_downvotes_table} WHERE answer_id = ?`;
-        let d = await db.query(qd, values);
-        res[0]['downvotes'] = d[0]['count(*)'];
+        // console.log(res)
+        let qu = `SELECT count(*) from ${question_upvotes_table} WHERE question_id = ?`;
+        let u = await db.query(qu, id);
+        res[0][0]['upvotes'] = u[0]['count(*)'];
+        let qd = `SELECT count(*) from ${question_downvotes_table} WHERE question_id = ?`;
+        let d = await db.query(qd, id);
+        res[0][0]['downvotes'] = d[0]['count(*)'];
         return res[0];
     }
     catch(err){
