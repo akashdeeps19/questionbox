@@ -35,7 +35,7 @@ document.querySelector('.results').innerHTML = '4';
 localStorage.setItem('rating',5)
    return (
         <div className="mybox">
-          <AnswerCard rating={+5} upvoter={this.upVote} downvoter={this.downVote} content={this.props.answer.answer} comment={"That was very helpful,thanks!"} />
+          <AnswerCard rating={this.props.answer.upvote-this.props.answer.downvotes} upvoter={this.upVote} downvoter={this.downVote} content={this.props.answer.answer}  />
           <br/>
           <Comment/>
         </div>
