@@ -14,6 +14,7 @@ class Answer extends Component {
 
   upVote = () => {
     const { questionId, changeAnswer, answer } = this.props
+    console.log(answer)
     localStorage.setItem('rating',6)
 localStorage.setItem('rating',6)
 document.querySelector('.results').innerHTML = '6';
@@ -34,7 +35,7 @@ document.querySelector('.results').innerHTML = '4';
 localStorage.setItem('rating',5)
    return (
         <div className="mybox">
-          <AnswerCard rating={+5} upvoter={2} downvoter={3} content={this.props.answer.answer} comment={"That was very helpful,thanks!"} />
+          <AnswerCard rating={+5} upvoter={this.upVote} downvoter={this.downVote} content={this.props.answer.answer} comment={"That was very helpful,thanks!"} />
           <br/>
           <Comment/>
         </div>

@@ -16,6 +16,90 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Temporary table structure for view `answer_downvotes`
+--
+
+DROP TABLE IF EXISTS `answer_downvotes`;
+/*!50001 DROP VIEW IF EXISTS `answer_downvotes`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `answer_downvotes` AS SELECT 
+ 1 AS `id`,
+ 1 AS `answer`,
+ 1 AS `views`,
+ 1 AS `answered_on`,
+ 1 AS `question_id`,
+ 1 AS `user_id`,
+ 1 AS `downvotes`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `answer_upvotes`
+--
+
+DROP TABLE IF EXISTS `answer_upvotes`;
+/*!50001 DROP VIEW IF EXISTS `answer_upvotes`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `answer_upvotes` AS SELECT 
+ 1 AS `id`,
+ 1 AS `answer`,
+ 1 AS `views`,
+ 1 AS `answered_on`,
+ 1 AS `question_id`,
+ 1 AS `user_id`,
+ 1 AS `upvotes`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `answers_public`
+--
+
+DROP TABLE IF EXISTS `answers_public`;
+/*!50001 DROP VIEW IF EXISTS `answers_public`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `answers_public` AS SELECT 
+ 1 AS `answer`,
+ 1 AS `question_id`,
+ 1 AS `user_name`,
+ 1 AS `upvotes`,
+ 1 AS `downvotes`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `question_downvotes`
+--
+
+DROP TABLE IF EXISTS `question_downvotes`;
+/*!50001 DROP VIEW IF EXISTS `question_downvotes`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `question_downvotes` AS SELECT 
+ 1 AS `id`,
+ 1 AS `question`,
+ 1 AS `views`,
+ 1 AS `asked_by_id`,
+ 1 AS `downvotes`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `question_upvotes`
+--
+
+DROP TABLE IF EXISTS `question_upvotes`;
+/*!50001 DROP VIEW IF EXISTS `question_upvotes`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `question_upvotes` AS SELECT 
+ 1 AS `id`,
+ 1 AS `question`,
+ 1 AS `views`,
+ 1 AS `asked_by_id`,
+ 1 AS `upvotes`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `questionbox_answercomments`
 --
 
@@ -86,14 +170,12 @@ CREATE TABLE `questionbox_answers` (
   `answered_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `question_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `upvotes` int(11) DEFAULT '0',
-  `downvotes` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `question_id` (`question_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `questionbox_answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questionbox_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questionbox_answers_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +184,7 @@ CREATE TABLE `questionbox_answers` (
 
 LOCK TABLES `questionbox_answers` WRITE;
 /*!40000 ALTER TABLE `questionbox_answers` DISABLE KEYS */;
-INSERT INTO `questionbox_answers` VALUES (1,'good ques',0,'2020-04-23 19:52:06',6,13,0,0);
+INSERT INTO `questionbox_answers` VALUES (1,'good ques',0,'2020-04-23 19:52:06',6,13),(6,'this is rom',0,'2020-06-05 15:26:44',8,15),(7,'this is rom',0,'2020-06-05 15:26:54',6,15),(8,'good or bad ques',0,'2020-06-11 16:06:57',3,15),(9,'normaliztion is a good thing',0,'2020-06-12 10:46:16',19,15);
 /*!40000 ALTER TABLE `questionbox_answers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,6 +211,7 @@ CREATE TABLE `questionbox_answerupvotes` (
 
 LOCK TABLES `questionbox_answerupvotes` WRITE;
 /*!40000 ALTER TABLE `questionbox_answerupvotes` DISABLE KEYS */;
+INSERT INTO `questionbox_answerupvotes` VALUES (15,1),(16,1),(16,6),(15,8);
 /*!40000 ALTER TABLE `questionbox_answerupvotes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +232,7 @@ CREATE TABLE `questionbox_appusers` (
   `bio` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +241,7 @@ CREATE TABLE `questionbox_appusers` (
 
 LOCK TABLES `questionbox_appusers` WRITE;
 /*!40000 ALTER TABLE `questionbox_appusers` DISABLE KEYS */;
-INSERT INTO `questionbox_appusers` VALUES ('ak','akas','h','as@g.com',15,'$2b$10$9pDEXeVOdcjNBiFYNLbMR.Z7YFO/NKQ.MZ/MwMvqWNQrCKr.K59b6','nicee');
+INSERT INTO `questionbox_appusers` VALUES ('ak','akas','h','as@g.com',15,'$2b$10$9pDEXeVOdcjNBiFYNLbMR.Z7YFO/NKQ.MZ/MwMvqWNQrCKr.K59b6','nicee'),('ak23','aka','sh','aksh@g.com',16,'$2b$10$knmJfagONJQxysgJ3v9OJe0D6d4XZnDTHu801ZP0hqPV4G2WnFKzC','good guy'),('gg','g','g','ggsh@g.com',17,'$2b$10$nWnw3K47xGIkoHoLD5isBeD8trVenhCTxqCiw3d9AOyCoTIHua0k.','good guy');
 /*!40000 ALTER TABLE `questionbox_appusers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,13 +341,11 @@ CREATE TABLE `questionbox_questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question` text,
   `views` int(11) DEFAULT '0',
-  `upvotes` int(11) DEFAULT '0',
   `asked_by_id` int(11) DEFAULT NULL,
-  `downvotes` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `asked_by_id` (`asked_by_id`),
   CONSTRAINT `questionbox_questions_ibfk_3` FOREIGN KEY (`asked_by_id`) REFERENCES `questionbox_appusers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +354,7 @@ CREATE TABLE `questionbox_questions` (
 
 LOCK TABLES `questionbox_questions` WRITE;
 /*!40000 ALTER TABLE `questionbox_questions` DISABLE KEYS */;
-INSERT INTO `questionbox_questions` VALUES (3,'what is good?',11,0,13,0),(4,'what is c?',0,0,13,0),(5,'where is ram?',1,0,10,0),(6,'where is physics?',3,0,10,0),(7,'what is this',3,0,15,0),(8,'what is this thing',0,0,15,0),(9,'what is this thing',0,0,15,0),(10,'what is this thing',0,0,15,0),(11,'what is this thing',0,0,15,0),(12,'what is rom',0,0,15,0),(13,'what is rom',0,0,15,0),(14,'what is rom',0,0,15,0);
+INSERT INTO `questionbox_questions` VALUES (3,'what is good?',12,13),(4,'what is c?',0,13),(5,'where is ram?',1,10),(6,'where is physics?',4,10),(7,'what is this',3,15),(8,'what is this thing',0,15),(9,'what is this thing',0,15),(10,'what is this thing',0,15),(11,'what is this thing',0,15),(12,'what is rom',0,15),(13,'what is rom',0,15),(14,'what is rom',0,15),(15,'what is rom',0,15),(16,'',0,15),(17,'what is db',0,15),(18,'',0,15),(19,'what is normalization',0,15);
 /*!40000 ALTER TABLE `questionbox_questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,7 +381,7 @@ CREATE TABLE `questionbox_questiontopics` (
 
 LOCK TABLES `questionbox_questiontopics` WRITE;
 /*!40000 ALTER TABLE `questionbox_questiontopics` DISABLE KEYS */;
-INSERT INTO `questionbox_questiontopics` VALUES (1,3),(1,7),(2,7),(1,8),(2,8),(1,9),(2,9),(1,10),(2,10),(1,11),(2,11),(1,12),(1,13),(1,14);
+INSERT INTO `questionbox_questiontopics` VALUES (1,3),(1,7),(2,7),(1,8),(2,8),(1,9),(2,9),(1,10),(2,10),(1,11),(2,11),(1,12),(1,13),(1,14),(1,15),(1,16),(2,16),(1,17),(2,17),(1,18),(2,18),(1,19),(2,19);
 /*!40000 ALTER TABLE `questionbox_questiontopics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,9 +486,79 @@ CREATE TABLE `questionbox_userfollows` (
 
 LOCK TABLES `questionbox_userfollows` WRITE;
 /*!40000 ALTER TABLE `questionbox_userfollows` DISABLE KEYS */;
-INSERT INTO `questionbox_userfollows` VALUES (14,10);
+INSERT INTO `questionbox_userfollows` VALUES (14,10),(15,16),(15,17),(17,16);
 /*!40000 ALTER TABLE `questionbox_userfollows` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `questions_public`
+--
+
+DROP TABLE IF EXISTS `questions_public`;
+/*!50001 DROP VIEW IF EXISTS `questions_public`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `questions_public` AS SELECT 
+ 1 AS `question`,
+ 1 AS `user_name`,
+ 1 AS `upvotes`,
+ 1 AS `downvotes`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `user_followers`
+--
+
+DROP TABLE IF EXISTS `user_followers`;
+/*!50001 DROP VIEW IF EXISTS `user_followers`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `user_followers` AS SELECT 
+ 1 AS `user_name`,
+ 1 AS `first_name`,
+ 1 AS `last_name`,
+ 1 AS `email`,
+ 1 AS `id`,
+ 1 AS `user_password`,
+ 1 AS `bio`,
+ 1 AS `followers`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `user_following`
+--
+
+DROP TABLE IF EXISTS `user_following`;
+/*!50001 DROP VIEW IF EXISTS `user_following`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `user_following` AS SELECT 
+ 1 AS `user_name`,
+ 1 AS `first_name`,
+ 1 AS `last_name`,
+ 1 AS `email`,
+ 1 AS `id`,
+ 1 AS `user_password`,
+ 1 AS `bio`,
+ 1 AS `following`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `users_public`
+--
+
+DROP TABLE IF EXISTS `users_public`;
+/*!50001 DROP VIEW IF EXISTS `users_public`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `users_public` AS SELECT 
+ 1 AS `user_name`,
+ 1 AS `first_name`,
+ 1 AS `last_name`,
+ 1 AS `bio`,
+ 1 AS `following`,
+ 1 AS `followers`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Dumping routines for database 'questionbox'
@@ -725,6 +876,168 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `answer_downvotes`
+--
+
+/*!50001 DROP VIEW IF EXISTS `answer_downvotes`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `answer_downvotes` AS select `qa`.`id` AS `id`,`qa`.`answer` AS `answer`,`qa`.`views` AS `views`,`qa`.`answered_on` AS `answered_on`,`qa`.`question_id` AS `question_id`,`qa`.`user_id` AS `user_id`,count(`qad`.`answer_id`) AS `downvotes` from (`questionbox_answers` `qa` left join `questionbox_answerdownvotes` `qad` on((`qa`.`id` = `qad`.`answer_id`))) group by `qa`.`id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `answer_upvotes`
+--
+
+/*!50001 DROP VIEW IF EXISTS `answer_upvotes`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `answer_upvotes` AS select `qa`.`id` AS `id`,`qa`.`answer` AS `answer`,`qa`.`views` AS `views`,`qa`.`answered_on` AS `answered_on`,`qa`.`question_id` AS `question_id`,`qa`.`user_id` AS `user_id`,count(`qau`.`answer_id`) AS `upvotes` from (`questionbox_answers` `qa` left join `questionbox_answerupvotes` `qau` on((`qa`.`id` = `qau`.`answer_id`))) group by `qa`.`id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `answers_public`
+--
+
+/*!50001 DROP VIEW IF EXISTS `answers_public`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `answers_public` AS select `qa`.`answer` AS `answer`,`qa`.`question_id` AS `question_id`,`qu`.`user_name` AS `user_name`,`au`.`upvotes` AS `upvotes`,`ad`.`downvotes` AS `downvotes` from (((`questionbox_answers` `qa` join `questionbox_appusers` `qu`) join `answer_upvotes` `au`) join `answer_downvotes` `ad`) where ((`qa`.`id` = `au`.`id`) and (`qa`.`id` = `ad`.`id`) and (`qu`.`id` = `qa`.`user_id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `question_downvotes`
+--
+
+/*!50001 DROP VIEW IF EXISTS `question_downvotes`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `question_downvotes` AS select `qq`.`id` AS `id`,`qq`.`question` AS `question`,`qq`.`views` AS `views`,`qq`.`asked_by_id` AS `asked_by_id`,count(`qqd`.`question_id`) AS `downvotes` from (`questionbox_questions` `qq` left join `questionbox_questiondownvotes` `qqd` on((`qq`.`id` = `qqd`.`question_id`))) group by `qq`.`id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `question_upvotes`
+--
+
+/*!50001 DROP VIEW IF EXISTS `question_upvotes`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `question_upvotes` AS select `qq`.`id` AS `id`,`qq`.`question` AS `question`,`qq`.`views` AS `views`,`qq`.`asked_by_id` AS `asked_by_id`,count(`qqu`.`question_id`) AS `upvotes` from (`questionbox_questions` `qq` left join `questionbox_questionupvotes` `qqu` on((`qq`.`id` = `qqu`.`question_id`))) group by `qq`.`id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `questions_public`
+--
+
+/*!50001 DROP VIEW IF EXISTS `questions_public`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `questions_public` AS select `qq`.`question` AS `question`,`qu`.`user_name` AS `user_name`,`u`.`upvotes` AS `upvotes`,`qd`.`downvotes` AS `downvotes` from (((`questionbox_questions` `qq` join `questionbox_appusers` `qu`) join `question_upvotes` `u`) join `question_downvotes` `qd`) where ((`qq`.`id` = `u`.`id`) and (`qq`.`id` = `qd`.`id`) and (`qu`.`id` = `qq`.`asked_by_id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `user_followers`
+--
+
+/*!50001 DROP VIEW IF EXISTS `user_followers`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `user_followers` AS select `qu`.`user_name` AS `user_name`,`qu`.`first_name` AS `first_name`,`qu`.`last_name` AS `last_name`,`qu`.`email` AS `email`,`qu`.`id` AS `id`,`qu`.`user_password` AS `user_password`,`qu`.`bio` AS `bio`,count(`quf`.`follower_id`) AS `followers` from (`questionbox_appusers` `qu` left join `questionbox_userfollows` `quf` on((`quf`.`follows_id` = `qu`.`id`))) group by `qu`.`id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `user_following`
+--
+
+/*!50001 DROP VIEW IF EXISTS `user_following`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `user_following` AS select `qu`.`user_name` AS `user_name`,`qu`.`first_name` AS `first_name`,`qu`.`last_name` AS `last_name`,`qu`.`email` AS `email`,`qu`.`id` AS `id`,`qu`.`user_password` AS `user_password`,`qu`.`bio` AS `bio`,count(`quf`.`follows_id`) AS `following` from (`questionbox_appusers` `qu` left join `questionbox_userfollows` `quf` on((`quf`.`follower_id` = `qu`.`id`))) group by `qu`.`id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `users_public`
+--
+
+/*!50001 DROP VIEW IF EXISTS `users_public`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `users_public` AS select `ufg`.`user_name` AS `user_name`,`ufg`.`first_name` AS `first_name`,`ufg`.`last_name` AS `last_name`,`ufg`.`bio` AS `bio`,`ufg`.`following` AS `following`,`ufr`.`followers` AS `followers` from (`user_following` `ufg` join `user_followers` `ufr`) where (`ufg`.`id` = `ufr`.`id`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -735,4 +1048,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-31 12:13:48
+-- Dump completed on 2020-06-12 11:27:07

@@ -51,6 +51,12 @@ Question.get_question = async (id,view) => {
         let res = await db.query(query,id);
         res[0][0]['topics'] = res[1];
         res[0][0]['answers'] = await Answer.get_answers(id);
+        let qu = `SELECT count(*) from ${question_upvotes_table} WHERE answer_id = ?`;
+        let u = await db.query(qu, values);
+        res[0]['upvotes'] = u[0]['count(*)'];
+        let qd = `SELECT count(*) from ${question_downvotes_table} WHERE answer_id = ?`;
+        let d = await db.query(qd, values);
+        res[0]['downvotes'] = d[0]['count(*)'];
         return res[0];
     }
     catch(err){
@@ -73,13 +79,7 @@ Question.upvote = async (q_id, u_id) => {
     let q1 = `INSERT INTO ${question_upvotes_table} SET ?`
     try {
         await db.query(q1,{question_id : q_id, user_id : u_id}); 
-        let q2 = `CALL question_upvote(?)`;
-        try {
-            await db.query(q2,q_id);
-            return true;
-        } catch (err) {
-            throw err;
-        }
+        return true;
     } catch (err) {
         throw err.sqlMessage;
     }
@@ -89,13 +89,7 @@ Question.upvote_cancel = async (q_id, u_id) => {
     let q1 = `DELETE FROM ${question_upvotes_table} WHERE question_id = ? and user_id = ?`;
     try {
         await db.query(q1,[q_id, u_id]); 
-        let q2 = `CALL question_upvote_cancel(?)`;
-        try {
-            await db.query(q2,q_id);
-            return true;
-        } catch (err) {
-            throw err;
-        }
+        return true;
     } catch (err) {
         throw err.sqlMessage;
     }
@@ -137,9 +131,6 @@ Question.downvote = async (q_id, u_id) => {
     let q1 = `INSERT INTO ${question_downvotes_table} SET ?`;
     let [err1, res1] = await db.query2(q1, {question_id : q_id, user_id : u_id});
     if(err1)return [err1];
-    let q2 = `CALL question_downvote(?)`;
-    let [err2, res2] = await db.query2(q2, q_id);
-    if(err2)return [err2];
     return [undefined, true];
 }
 
@@ -147,9 +138,6 @@ Question.downvote_cancel = async (q_id, u_id) => {
     let q1 = `DELETE FROM ${question_downvotes_table} WHERE question_id = ? and user_id = ?`;
     let [err1, res1] = await db.query2(q1, [q_id, u_id]);
     if(err1)return [err1];
-    let q2 = `CALL question_downvote_cancel(?)`;
-    let [err2, res2] = await db.query2(q2, q_id);
-    if(err2)return [err2];
     return [undefined, true];
 }
 

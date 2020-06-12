@@ -29,9 +29,9 @@ function Post(props){
     <div style={style}>
       <PostButton label = 'x' handleClick = {props.removeItem}/>
       <PostText text = {props.title} width = "200"/>
-      <PostButton label = '+' handleClick = {props.incrementScore}/>
+      {/* <PostButton label = '+' handleClick = {props.incrementScore}/>
       <PostText text = {props.score} width = "20" />
-      <PostButton label = '-' handleClick = {props.decrementScore}/>
+      <PostButton label = '-' handleClick = {props.decrementScore}/> */}
     </div>
   );
 }
@@ -43,9 +43,9 @@ function PostList(props){
         props.postList.map((item, index) => (
           <Post key = {index}
                 title = {item.title}
-                score = {item.score}
-                incrementScore = {() => props.updateScore(index, 1)}
-                decrementScore = {() => props.updateScore(index, -1)}
+                // score = {item.score}
+                // incrementScore = {() => props.updateScore(index, 1)}
+                // decrementScore = {() => props.updateScore(index, -1)}
                 removeItem = {() => props.removeItem(index)}
           />
         ))
