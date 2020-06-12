@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import '../App.css';
 import { changeAnswer } from '../actions/answers';
 import AnswerCard from '../components/answercard'
+import Comment from '../components/comment';
 
 
 class Answer extends Component {
@@ -35,13 +36,7 @@ localStorage.setItem('rating',5)
         <div className="mybox">
           <AnswerCard rating={+5} upvoter={2} downvoter={3} content={this.props.answer.answer} comment={"That was very helpful,thanks!"} />
           <br/>
-          <form id = "commentblock">
-          <label for="commentbox">Add your own comment:</label>
-          <br/>
-          <textarea id="commentbox" name="commentbox" rows="4" cols="25"></textarea>
-          <br/><br/>
-          <input type="submit" value="Submit"/>
-          </form>
+          <Comment/>
         </div>
     );
 
