@@ -68,7 +68,7 @@ export const createAnswerComment = (comment, answerId) => {
   // sessionStorage.setItem()
   // sessionStorage.getItem("question")
   console.log("the berarer token is"+ bearer);
-  console.log(answer)
+ 
   return dispatch => {
     return fetch(`${API_URL}/answercomments/answer/${answerId}/`, {
       method: 'POST',
@@ -78,24 +78,16 @@ export const createAnswerComment = (comment, answerId) => {
         'Authorization':bearer,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ comment: answer['comment'] }),
+      body: JSON.stringify({ comment: comment['comment'] }),
     })
       .then(response => response.json())
-      .then(answer => {
+      .then(comment => {
         // dispatch(addAnswer(answer, questionId));
     })
       .catch(error => console.log(error))
   }
 }
 // GET /answers/question/:q_id
-export const getAnswers = (questionId) => {
-  console.log("getting answers now ");
-  return dispatch => {
-    return fetch(`${API_URL}/answers/question/${questionId}`)
-      .then(response => response.json())
-      .then(answers => dispatch(setAnswers(answers, questionId)))
-  };
-};
 
 
 
@@ -107,7 +99,7 @@ export const upvoteAnswer = (answerID) => {
   // sessionStorage.setItem()
   // sessionStorage.getItem("question")
   console.log("the berarer token is"+ bearer);
-  console.log(answer)
+
   return dispatch => {
     return fetch(`${API_URL}/answers/${answerID}/upvote`, {
       method: 'POST',
@@ -120,12 +112,12 @@ export const upvoteAnswer = (answerID) => {
       body: JSON.stringify(),
     })
       .then(response => response.json())
-      .then(answer => {
-        dispatch(addAnswer(answer, questionId));
+      .then(answerID => {
     })
       .catch(error => console.log(error))
   }
 }
+
 
 
 export const downvoteAnswer = (answerID) => {
@@ -133,7 +125,7 @@ export const downvoteAnswer = (answerID) => {
   // sessionStorage.setItem()
   // sessionStorage.getItem("question")
   console.log("the berarer token is"+ bearer);
-  console.log(answer)
+
   return dispatch => {
     return fetch(`${API_URL}/answers/${answerID}/downvotevote`, {
       method: 'POST',
@@ -146,8 +138,7 @@ export const downvoteAnswer = (answerID) => {
       body: JSON.stringify(),
     })
       .then(response => response.json())
-      .then(answer => {
-        dispatch(addAnswer(answer, questionId));
+      .then(answerID => {
     })
       .catch(error => console.log(error))
   }
