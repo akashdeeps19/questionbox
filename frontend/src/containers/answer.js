@@ -4,7 +4,7 @@ import '../App.css';
 import { changeAnswer } from '../actions/answers';
 import AnswerCard from '../components/answercard'
 import Comment from '../components/comment';
-
+import axios from 'axios';
 
 class Answer extends Component {
   
@@ -14,17 +14,39 @@ class Answer extends Component {
 
   upVote = () => {
     const { questionId, changeAnswer, answer } = this.props
-    console.log(answer)
-    localStorage.setItem('rating',6)
-localStorage.setItem('rating',6)
-document.querySelector('.results').innerHTML = '6';
+   //console.log(answer)
+
+   console.log(this.props);
+ var bearer = 'Bearer '+sessionStorage.getItem('token');
+ console.log(bearer);
+  const aid=this.props.answer[0].id
+ const url = `http://localhost:3000/answers/${aid}/upvote`
+axios.post(url,{}, {
+  headers: {
+    'Authorization': bearer
+  }
+});
+
+
+    
+
+
     /*const updatedAnswer = Object.assign( {}, answer, { count: answer.count + 1 })
     changeAnswer(questionId, updatedAnswer) */
   }
 
   downVote = event => {
-	localStorage.setItem('rating',6)
-document.querySelector('.results').innerHTML = '4';
+  console.log(this.props);
+ var bearer = 'Bearer '+sessionStorage.getItem('token');
+ console.log(bearer);
+  const aid=this.props.answer[0].id
+ const url = `http://localhost:3000/answers/${aid}/downvote`
+axios.post(url,{}, {
+  headers: {
+    'Authorization': bearer
+  }
+});
+        
   
     const { questionId, changeAnswer, answer } = this.props
     /*const updatedAnswer = Object.assign( {}, answer, { count: answer.count - 1 })
@@ -35,7 +57,7 @@ document.querySelector('.results').innerHTML = '4';
 localStorage.setItem('rating',5)
    return (
         <div className="mybox">
-          <AnswerCard rating={this.props.answer.upvote-this.props.answer.downvotes} upvoter={this.upVote} downvoter={this.downVote} content={this.props.answer.answer}  />
+          <AnswerCard rating={this.props.answer[0].upvotes-this.props.answer[0].downvotes} upvotes={this.props.answer[0].upvotes} downvotes={this.props.answer[0].downvotes}upvoter={this.upVote} downvoter={this.downVote} content={this.props.answer[0].answer} comment={"That was very helpful,thanks!"} />
           <br/>
           <Comment/>
         </div>
@@ -66,4 +88,3 @@ localStorage.setItem('rating',5)
 }
 
 export default connect(null, { changeAnswer })(Answer);
-
