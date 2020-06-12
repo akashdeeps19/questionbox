@@ -63,6 +63,91 @@ export const getAnswers = (questionId) => {
   };
 };
 
+export const createAnswerComment = (comment, answerId) => {
+  var bearer = 'Bearer '+sessionStorage.getItem('token');
+  // sessionStorage.setItem()
+  // sessionStorage.getItem("question")
+  console.log("the berarer token is"+ bearer);
+ 
+  return dispatch => {
+    return fetch(`${API_URL}/answercomments/answer/${answerId}/`, {
+      method: 'POST',
+      // 'Access-Control-Allow-Origin':API_URL,
+      headers: {
+        // 'Access-Control-Allow-Origin':API_URL,
+        'Authorization':bearer,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ comment: comment['comment'] }),
+    })
+      .then(response => response.json())
+      .then(comment => {
+        // dispatch(addAnswer(answer, questionId));
+    })
+      .catch(error => console.log(error))
+  }
+}
+// GET /answers/question/:q_id
+
+
+
+
+// POST /answers/:a_id/upvote 
+
+export const upvoteAnswer = (answerID) => {
+  var bearer = 'Bearer '+sessionStorage.getItem('token');
+  // sessionStorage.setItem()
+  // sessionStorage.getItem("question")
+  console.log("the berarer token is"+ bearer);
+
+  return dispatch => {
+    return fetch(`${API_URL}/answers/${answerID}/upvote`, {
+      method: 'POST',
+      // 'Access-Control-Allow-Origin':API_URL,
+      headers: {
+        // 'Access-Control-Allow-Origin':API_URL,
+        'Authorization':bearer,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(),
+    })
+      .then(response => response.json())
+      .then(answerID => {
+    })
+      .catch(error => console.log(error))
+  }
+}
+
+
+
+export const downvoteAnswer = (answerID) => {
+  var bearer = 'Bearer '+sessionStorage.getItem('token');
+  // sessionStorage.setItem()
+  // sessionStorage.getItem("question")
+  console.log("the berarer token is"+ bearer);
+
+  return dispatch => {
+    return fetch(`${API_URL}/answers/${answerID}/downvotevote`, {
+      method: 'POST',
+      // 'Access-Control-Allow-Origin':API_URL,
+      headers: {
+        // 'Access-Control-Allow-Origin':API_URL,
+        'Authorization':bearer,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(),
+    })
+      .then(response => response.json())
+      .then(answerID => {
+    })
+      .catch(error => console.log(error))
+  }
+}
+
+
+
+
+
 export const changeAnswer = (questionId, updatedAnswer) => {
     
     return dispatch => {
@@ -81,5 +166,4 @@ export const changeAnswer = (questionId, updatedAnswer) => {
         })
     };
 };
-
 

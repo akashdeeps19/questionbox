@@ -32,18 +32,22 @@ class AskQuestion extends Component {
     return (
       <form onSubmit={this.handleOnSubmit}>
         <input
+          style={{ border: '4px inset #99ccff'}}
           type="textarea"
           name="Title"
           value={this.state.title}
           onChange={this.handleOnChange}
           placeholder="Ask a Question"
         />
+
         <br/>
         <br/>
+
           <input
+          style={{ border: '4px inset #99ccff'}}
           type="textarea"
           name="Topic"
-          value={this.state.title}
+          value={this.state.topic}
           placeholder="Topic goes here!"
         />
         {/* <input
