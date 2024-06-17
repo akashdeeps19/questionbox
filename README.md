@@ -1,5 +1,10 @@
 # questionbox
-Api for web app similar to stackoverflow
+Web Interface similar to Stackoverflow. 
+
+# Entity Relationship Diagram 
+![image](https://github.com/Sujan242/questionbox/assets/48852710/5fe9c9d7-89c8-4d35-9564-761bbf3e593c)
+
+
 ### Setup
 1.) Import the questionbox.sql file into appropriate MySql database<br/><br/>
 2.) Configure credentials in ./config/database_config<br/><br/>
